@@ -28,7 +28,7 @@ class ResourceController extends Controller
         }else{
             $response->headers->set('Content-Type', 'text/plain');
             $response->setStatusCode(404);
-            $response->setContent(View::view('errors.404')->with('path',$request->getPathInfo())->render());
+            $response->setContent(View::view('errors/404')->with('path',$request->getPathInfo())->render());
         }
         return $response;
     }

@@ -9,7 +9,9 @@
       "ext-fileinfo": "*",
         "symfony/http-foundation": "^5.1",
         "illuminate/view": "^7.18",
-        "illuminate/database": "^7.18"
+        "illuminate/database": "^7.18",
+      "ext-posix": "*",
+      "ext-zlib": "*"
     },
   "autoload": {
     "files": [

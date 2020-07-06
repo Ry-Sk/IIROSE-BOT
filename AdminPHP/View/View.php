@@ -42,6 +42,6 @@ class View
      * @return \Illuminate\Contracts\View\View
      */
     public static function view($view){
-        return \Illuminate\Support\Facades\View::file($view);
+        return \Illuminate\Support\Facades\View::make($view);
     }
 }

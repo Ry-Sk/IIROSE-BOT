@@ -5,6 +5,7 @@ use Console\Commands\Command;
 use DB\DataBase;
 use File\File;
 use File\Path;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Models\Bot;
 use Phar;
@@ -61,6 +62,12 @@ class '.$class.' extends Model
         foreach ($columns as $column) {
             $o .= "\n" . ' * @property $' . $column;
         }
+        if(in_array('id',$columns)){
+            $o.='
+ * @method static '.$class.' find(int $id)
+ * @method static '.$class.' findOrFail(int $id)';
+        }
+        $o.="\n".' * @method static \\Illuminate\\Database\\Query\\Builder where(\\Closure|string|array $column, mixed $operator = null, mixed $value = null, string $boolean = \'and\')';
         $o.=$after;
         file_put_contents($file,$o);
         return 0;
