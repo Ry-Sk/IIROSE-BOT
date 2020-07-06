@@ -1,0 +1,1 @@
+<?php echo e('pppppp'); ?><?php /**PATH /home/logos/projects/adminphp/views/test.blade.php ENDPATH**/ ?>

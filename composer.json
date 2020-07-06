@@ -1,0 +1,20 @@
+{
+    "require": {
+        "symfony/console": "^5.1",
+        "vlucas/phpdotenv": "^5.0",
+      "ext-json": "*",
+        "swoole/ide-helper": "^4.5",
+        "symfony/routing": "^5.1",
+      "ext-http": "*",
+      "ext-fileinfo": "*",
+        "symfony/http-foundation": "^5.1",
+        "illuminate/view": "^7.18",
+        "illuminate/database": "^7.18"
+    },
+  "autoload": {
+    "files": [
+      "AdminPHP/functions.php",
+      "app/functions.php"
+    ]
+  }
+}
