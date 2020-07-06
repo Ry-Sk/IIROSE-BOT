@@ -26,7 +26,7 @@ class OneBotCommand extends Command
     {
         \Co\run(function () use ($input) {
             new DataBase();
-            $bot=Bot::findOrFail($input->getArgument('id'));
+            $bot=Bot::find($input->getArgument('id'));
             $bot->run();
         });
         return 0;

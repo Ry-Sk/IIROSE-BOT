@@ -27,4 +27,7 @@ class Plugin extends Model
         $this->pluginLoader=new $loader_class($bot, $configure,$this->slug);
         $this->pluginLoader->load();
     }
+    public function reload($configure){
+        $this->pluginLoader->reload($configure);
+    }
 }

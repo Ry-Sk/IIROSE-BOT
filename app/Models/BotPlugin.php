@@ -1,6 +1,8 @@
 <?php
 namespace Models;
 
+use Bot\PluginLoader;
+use Console\ErrorFormat;
 use Model\Models\Model;
 
 /**
@@ -20,10 +22,25 @@ class BotPlugin extends Model
 {
     /** @var Bot $bot */
     protected $bot;
+    /** @var Plugin $plugin */
     protected $plugin;
     public function loading($bot){
         $this->bot=$bot;
         $this->plugin=Plugin::findOrFail($this->plugin_id);
         $this->plugin->loading($bot,$this->configure);
+        go(function (){
+            while (true){
+                try{
+                    $config=$this->configure;
+                    $this->refresh();
+                    if($config!=$this->configure){
+                        $this->plugin->reload($this->configure);
+                    }
+                }catch (\Throwable $e){
+                    ErrorFormat::dump($e);
+                }
+                \Co::sleep(5);
+            }
+        });
     }
 }

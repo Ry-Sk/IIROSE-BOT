@@ -1,14 +1,18 @@
 <?php
 namespace Models;
 
+use Bot\AutoListener;
 use Bot\AutoLoader;
 use Bot\Connection;
+use Bot\Event\ChatEvent;
 use Bot\Exception\NetworkException;
 use Bot\Handle;
 use Bot\Handler;
+use Bot\Listenerable;
 use Bot\Packet;
 use Bot\Packets\PingPacket;
 use Console\Commands\Command;
+use Console\ErrorFormat;
 use File\File;
 use Logger\Logger;
 use Model\Models\Model;
@@ -27,8 +31,9 @@ use SplQueue;
  * @method static \Illuminate\Database\Query\Builder where(\Closure|string|array $column, mixed $operator = null, mixed $value = null, string $boolean = 'and')
  * @adminphp end
  */
-class Bot extends Model
+class Bot extends Model implements Listenerable
 {
+    use AutoListener;
     /** @var Bot $instance */
     public static $instance;
     public $startAt;
@@ -62,6 +67,9 @@ class Bot extends Model
             $this->handles[substr($handler_class,1)]=new Handle($handler);
         }
 
+        Logger::info('监听事件');
+        $this->registerListeners();
+
         Logger::info('载入插件');
         $this->plugins=$this->plugins=BotPlugin::where('bot_id','=',$this->id)->get();
         foreach ($this->plugins as $plugin){
@@ -88,7 +96,7 @@ class Bot extends Model
                 $this->receiveQueue->push($packet);
             });
         } catch (NetworkException $e) {
-            //var_dump($e);
+            ErrorFormat::dump($e);
         }
     }
     private function receive(){
@@ -132,7 +140,6 @@ class Bot extends Model
     private function timer(){
         swoole_timer_tick(
             5000, function () {
-                echo 'u';
             $this->packet(new PingPacket());
         }
         );
@@ -162,5 +169,14 @@ class Bot extends Model
     }
     public function getHandler($handleClass){
         return $this->handles[$handleClass];
+    }
+
+    public function loaded()
+    {
+        return true;
+    }
+
+    public function onChat(ChatEvent $chatEvent){
+        var_dump($chatEvent);
     }
 }
