@@ -92,7 +92,7 @@ class Path
     public static function get_extension($file){
         return substr(strrchr($file, '.'), 1);
     }
-    public static function get_exif($extension){
+    public static function get_mine($extension){
         $mimes = array(
             'phps' => 1,
             'c' => 'text/plain',
@@ -119,6 +119,7 @@ class Path
             'jpg' => 'image/jpeg',
             'jpeg' => 'image/jpeg',
             'js' => 'application/x-javascript',
+            'json' => 'text/json',
             'midi' => 'audio/midi',
             'mid' => 'audio/midi',
             'mod' => 'audio/mod',

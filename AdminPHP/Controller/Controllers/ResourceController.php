@@ -15,7 +15,7 @@ class ResourceController extends Controller
         $response=new Response();
         if(file_exists(Path::public($request->getPathInfo()))
             && is_file(Path::public($request->getPathInfo()))){
-            $mine=Path::get_exif(Path::get_extension(Path::public($request->getPathInfo())));
+            $mine=Path::get_mine(Path::get_extension(Path::public($request->getPathInfo())));
             switch ($mine){
                 case 1:
                     $response->headers->set('Content-Type', 'text/html');

@@ -7,12 +7,10 @@ use File\File;
 use File\Path;
 use Illuminate\Support\Str;
 use Model\Models\Model;
+use Parsedowns\ConfigureParse;
 
 class Plugin
 {
-    const loaders=[
-        'php'=>PluginLoader\PhpPluginLoader::class
-    ];
     /** @var PluginLoader */
     protected $pluginLoader;
     protected $pluginLoaderClass;
@@ -30,6 +28,17 @@ class Plugin
         $classSlug=strtoupper(substr($plugin->info->loader,0,1)).substr($plugin->info->loader,1);
         $plugin->pluginLoaderClass='\\Bot\\PluginLoader\\'.$classSlug.'PluginLoader';
         return $plugin;
+    }
+
+    public function getConfig(){
+        return json_decode(file_get_contents($this->basePath.'/config.json'),true);
+    }
+    public function getConfigurePage($configure){
+        $parser=new ConfigureParse(
+            $this->getConfig(),
+            $configure
+        );
+        return $parser->parse(file_get_contents($this->basePath.'/config.md'));
     }
 
     public function load($bot, $configure)

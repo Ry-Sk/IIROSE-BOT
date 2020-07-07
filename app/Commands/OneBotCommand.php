@@ -18,12 +18,13 @@ class OneBotCommand extends Command
     protected function configure()
     {
         $this->addArgument('id',InputArgument::REQUIRED);
-        $this->setProcessTitle('IIROSE-BOT running');
+        $this->setProcessTitle('IIROSE-BOT');
         $this->setDescription('running bot with id');
         $this->setHelp('id should be in');
     }
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->setProcessTitle('IIROSE-BOT '.$input->getArgument('id'));
         \Co\run(function () use ($input) {
             new DataBase();
             $bot=Bot::find($input->getArgument('id'));

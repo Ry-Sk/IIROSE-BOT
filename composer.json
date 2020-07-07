@@ -11,7 +11,9 @@
         "illuminate/view": "^7.18",
         "illuminate/database": "^7.18",
       "ext-posix": "*",
-      "ext-zlib": "*"
+      "ext-zlib": "*",
+        "guzzlehttp/guzzle": "^7.0",
+        "erusev/parsedown": "^1.7"
     },
   "autoload": {
     "files": [

@@ -13,7 +13,7 @@ class TestMiddleWare implements MiddleWare
     {
         /** @var Response $response */
         $response = $next($request);
-        $response->headers->set('logos留言','世纪末彼岸花丛中的死亡结界');
+        $response->headers->set('Server','IIROSE-BOT-SERVER');
         return $response;
     }
 }

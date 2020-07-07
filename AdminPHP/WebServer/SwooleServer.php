@@ -2,13 +2,12 @@
 
 namespace WebServer;
 use Controller\Controller;
+use DB\DataBase;
 use File\Path;
 use Http\Keneral;
 use Http\Request;
 use Http\Response;
 use MiddleWare\MiddleWare;
-use PHPSandbox\Error;
-use PHPSandbox\PHPSandbox;
 use Route\Route;
 use Swoole\Http\Server;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
@@ -25,6 +24,7 @@ class SwooleServer
         });
 
         $http->on("request", function ($swoole_request, $swoole_response) use($keneral){
+            new DataBase();
             /** @var $swoole_request \Swoole\Http\Request */
             /** @var $swoole_response \Swoole\Http\Response */
 
@@ -44,7 +44,6 @@ class SwooleServer
                 $server,
                 $swoole_request->rawContent()
             );
-
             $response=$keneral->http($request);
             foreach ($response->headers->all() as $k=>$v){
                 foreach ($v as $pv){

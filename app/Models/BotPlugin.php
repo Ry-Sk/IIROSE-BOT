@@ -21,6 +21,22 @@ use Model\Models\Model;
  */
 class BotPlugin extends Model
 {
+    public $timestamps = false;
+
+    /**
+     * @param $bot
+     * @return BotPlugin[]
+     */
+    public static function findByBot($bot){
+        if($bot instanceof Bot){
+            $botPlugins = BotPlugin::where('bot_id','=',$bot->id)->get();
+        }else{
+            $botPlugins =  BotPlugin::where('bot_id','=',$bot)->get();
+        }
+        /** @var BotPlugin[] $botPlugins */
+        return $botPlugins;
+    }
+
     /** @var Bot $bot */
     protected $bot;
     /** @var Plugin $plugin */

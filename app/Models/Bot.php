@@ -13,6 +13,7 @@ use Bot\Packet;
 use Bot\Packets\PingPacket;
 use Console\Commands\Command;
 use Console\ErrorFormat;
+use Exceptions\NeedAuthException;
 use File\File;
 use Logger\Logger;
 use Model\Models\Model;
@@ -23,9 +24,12 @@ use SplQueue;
  * @package Models
  * @adminphp start
  * @property $id
+ * @property $uid
  * @property $username
  * @property $password
  * @property $room
+ * @property $token
+ * @property $enable
  * @method static Bot find(int $id)
  * @method static Bot findOrFail(int $id)
  * @method static \Illuminate\Database\Query\Builder where(\Closure|string|array $column, mixed $operator = null, mixed $value = null, string $boolean = 'and')
@@ -33,6 +37,29 @@ use SplQueue;
  */
 class Bot extends Model implements Listenerable
 {
+    public $timestamps = false;
+
+    /**
+     * @param $token
+     * @return Bot
+     */
+    public static function auth($token){
+        /** @var Bot $bot */
+        $bot=self::where('token','=',$token)->first();
+        return $bot;
+    }
+    /**
+     * @param $token
+     * @return Bot
+     */
+    public static function authOrFail($token){
+        $bot=self::auth($token);
+        if($bot){
+            return $bot;
+        }else{
+            throw new NeedAuthException();
+        }
+    }
     use AutoListener;
     /** @var Bot $instance */
     public static $instance;
@@ -71,7 +98,7 @@ class Bot extends Model implements Listenerable
         $this->registerListeners();
 
         Logger::info('载入插件');
-        $this->plugins=$this->plugins=BotPlugin::where('bot_id','=',$this->id)->get();
+        $this->plugins=BotPlugin::findByBot($this);
         foreach ($this->plugins as $plugin){
             $plugin->loading($this);
         }
