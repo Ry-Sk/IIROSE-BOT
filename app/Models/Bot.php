@@ -4,12 +4,17 @@ namespace Models;
 use Bot\AutoListener;
 use Bot\AutoLoader;
 use Bot\Connection;
+use Bot\Console\Application;
+use Bot\Console\InputUtils;
 use Bot\Event\ChatEvent;
+use Bot\Event\PersonChatEvent;
 use Bot\Exception\NetworkException;
 use Bot\Handle;
 use Bot\Handler;
 use Bot\Listenerable;
 use Bot\Packet;
+use Bot\Packets\ChatPacket;
+use Bot\Packets\PersonChatPacket;
 use Bot\Packets\PingPacket;
 use Console\Commands\Command;
 use Console\ErrorFormat;
@@ -18,6 +23,9 @@ use File\File;
 use Logger\Logger;
 use Model\Models\Model;
 use SplQueue;
+use Swoole\ExitException;
+use Symfony\Component\Console\Output\BufferedOutput;
+use Throwable;
 
 /**
  * Class Bot
@@ -72,6 +80,10 @@ class Bot extends Model implements Listenerable
     protected $connect;
     /** @var Handle[] $handles */
     protected $handles;
+    /** @var Application $command */
+    protected $command;
+    /** @var \Bot\Command[] $commands */
+    protected $commands;
     /** @var BotPlugin[] $plugins */
     protected $plugins;
     /** @var AutoLoader $autoLoader */
@@ -93,6 +105,8 @@ class Bot extends Model implements Listenerable
             $handler = new $handler_class();
             $this->handles[substr($handler_class,1)]=new Handle($handler);
         }
+        Logger::info('载入命令解析器');
+        $this->command=new Application('IIROSE-BOT-'.$this->username,'瞄呜');
 
         Logger::info('监听事件');
         $this->registerListeners();
@@ -197,7 +211,46 @@ class Bot extends Model implements Listenerable
     public function getHandler($handleClass){
         return $this->handles[$handleClass];
     }
+    public function addCommand($configure){
+        $this->commands[$configure->sign]=new \Bot\Command($configure);
+        $this->command->add($this->commands[$configure->sign]);
+    }
 
+
+
+
+    public function onChat(ChatEvent $chatEvent){
+        if(substr($chatEvent->message,0,1)=='/'){
+            $output=new BufferedOutput();
+            try {
+                $this->command->run(new InputUtils(substr($chatEvent->message, 1),$chatEvent), $output);
+            }catch(ExitException $e){
+
+            }catch (Throwable $e) {
+                ErrorFormat::dump($e);
+            }
+            $d=$output->fetch();
+            if(strlen($d)){
+                $this->packet(new ChatPacket('\\\\\\='.$d,$chatEvent->color?:null));
+            }
+        }
+    }
+    public function onPersonChat(PersonChatEvent $personChatEvent){
+        if(substr($personChatEvent->message,0,1)=='/'){
+            $output=new BufferedOutput();
+            try {
+                Bot::$instance->command->run(new InputUtils(substr($personChatEvent->message, 1),$personChatEvent), $output);
+            }catch(ExitException $e){
+
+            }catch (Throwable $e) {
+                ErrorFormat::dump($e);
+            }
+            $d=$output->fetch();
+            if(strlen($d)) {
+                $this->packet(new PersonChatPacket($personChatEvent->user_id, '\\\\\\=' . $output->fetch(), $personChatEvent->color ?: null));
+            }
+        }
+    }
     public function loaded()
     {
         return true;

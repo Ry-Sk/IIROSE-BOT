@@ -30,4 +30,13 @@ class Handle
         }
         $this->listeners[]=$listener;
     }
+    public function onEvent($event){
+        foreach ($this->listeners as $key=>$listener) {
+            if($listener->plugin->loaded()) {
+                call_user_func($listener->method,$event);
+            }else{
+                unset($this->listeners[$key]);
+            }
+        }
+    }
 }

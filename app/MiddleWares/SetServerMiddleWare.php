@@ -7,7 +7,7 @@ use Http\Request;
 use Http\Response;
 use MiddleWare\MiddleWares\MiddleWare;
 
-class TestMiddleWare implements MiddleWare
+class SetServerMiddleWare implements MiddleWare
 {
     public function hanlde(Request $request, Closure $next)
     {

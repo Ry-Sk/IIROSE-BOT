@@ -7,6 +7,7 @@ use File\File;
 use File\Path;
 use Illuminate\Support\Str;
 use Model\Models\Model;
+use Models\Bot;
 use Parsedowns\ConfigureParse;
 
 class Plugin
@@ -41,10 +42,18 @@ class Plugin
         return $parser->parse(file_get_contents($this->basePath.'/config.md'));
     }
 
+    /**
+     * @param Bot $bot
+     * @param $configure
+     */
     public function load($bot, $configure)
     {
         $this->pluginLoader = new $this->pluginLoaderClass($bot, $configure,$this->slug);
         $this->pluginLoader->load();
+        $commands=json_decode(file_get_contents($this->basePath.'/commands.json'));
+        foreach ($commands as $command){
+            $bot->addCommand($command);
+        }
     }
 
     public function reload($configure){

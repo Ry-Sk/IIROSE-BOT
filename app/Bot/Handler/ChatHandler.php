@@ -10,7 +10,9 @@ class ChatHandler implements Handler
 
     public function isPacket($message, $firstChar, $count, $explode)
     {
-        if ($count == 11 && !($explode[0]<Bot::$instance->startAt)) {
+        if ($count == 11
+            && !($explode[0]<Bot::$instance->startAt)
+            && ($explode[2]!=Bot::$instance->username)) {
             return true;
         }
     }
