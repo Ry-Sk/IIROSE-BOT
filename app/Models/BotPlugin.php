@@ -1,6 +1,7 @@
 <?php
 namespace Models;
 
+use Bot\Models\Plugin;
 use Bot\PluginLoader;
 use Console\ErrorFormat;
 use Model\Models\Model;
@@ -11,7 +12,7 @@ use Model\Models\Model;
  * @adminphp start
  * @property $id
  * @property $bot_id
- * @property $plugin_id
+ * @property $slug
  * @property $configure
  * @method static BotPlugin find(int $id)
  * @method static BotPlugin findOrFail(int $id)
@@ -26,8 +27,8 @@ class BotPlugin extends Model
     protected $plugin;
     public function loading($bot){
         $this->bot=$bot;
-        $this->plugin=Plugin::findOrFail($this->plugin_id);
-        $this->plugin->loading($bot,$this->configure);
+        $this->plugin=Plugin::find($this->slug);
+        $this->plugin->load($bot,$this->configure);
         go(function (){
             while (true){
                 try{

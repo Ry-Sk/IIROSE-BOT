@@ -175,8 +175,4 @@ class Bot extends Model implements Listenerable
     {
         return true;
     }
-
-    public function onChat(ChatEvent $chatEvent){
-        var_dump($chatEvent);
-    }
 }

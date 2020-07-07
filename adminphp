@@ -4,3 +4,9 @@ define('ROOT',__DIR__);
 require_once ROOT.'/AdminPHP/init.php';
 use Console\Console;
 new Console();
+/**
+ * docker run -it ubuntu:20.04 /bin/bash
+ * apt install php-dev composer php-json php-http php-common php-mysql php-sqlite3
+ * pecl install swoole
+ * You should add "extension=swoole.so" to php.ini
+ */

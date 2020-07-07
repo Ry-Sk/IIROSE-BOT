@@ -16,9 +16,8 @@ class Handle
         if($this->handler->isPacket($message,$firstChar,$count,$explode)){
             $event=$this->handler->pharse($message);
             foreach ($this->listeners as $key=>$listener) {
-                $method=$listener->method;
                 if($listener->plugin->loaded()) {
-                    $listener->plugin->$method($event);
+                    call_user_func($listener->method,$event);
                 }else{
                     unset($this->listeners[$key]);
                 }

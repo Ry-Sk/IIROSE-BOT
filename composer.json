@@ -18,5 +18,11 @@
       "AdminPHP/functions.php",
       "app/functions.php"
     ]
-  }
+  },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://mirrors.aliyun.com/composer/"
+        }
+    }
 }

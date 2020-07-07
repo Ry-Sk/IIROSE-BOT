@@ -13,7 +13,7 @@ class PhpPluginLoader extends PluginLoader implements Listenerable
     public function load()
     {
         $this->load=true;
-        $this->bot->getAutoLoader()->add('Plugin\\' . $this->slug, ROOT . '/plugins/PHP/' . $this->slug . '/Plugin');
+        $this->bot->getAutoLoader()->add('Plugin\\' . $this->slug, ROOT . '/plugins/' . $this->slug . '/Plugin');
         $plugin_class = '\\Plugin\\' . $this->slug . '\\' . $this->slug;
         $this->plugin = new $plugin_class($this->bot, $this->configure, $this);
         $this->registerListeners($this->plugin);

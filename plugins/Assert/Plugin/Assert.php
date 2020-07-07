@@ -12,7 +12,7 @@ class Assert extends PhpPlugin
     public function onChat(ChatEvent $event)
     {
         if ($event->message=='表白'.$this->bot->username) {
-            $this->bot->packet(new ChatPacket(' [*'.$this->bot->username.'*] 谢谢'));
+            $this->bot->packet(new ChatPacket(' [*'.$event->user_name.'*] 谢谢'));
         }
     }
 }
