@@ -189,3 +189,9 @@ exit
 ./adminphp bot:one 3
 composer install
 exit
+./adminphp server:swoole
+./adminphp server:swoole
+./adminphp server:swoole -help
+./adminphp server:swoole
+./adminphp server:swoole
+exit

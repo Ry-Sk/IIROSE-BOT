@@ -33,10 +33,17 @@ class BotCommand extends Command
                 $procs=[];
                 while (true){
                     // A.将数据库转换为BOT LIST
+                    /** @var Bot[] $all_bots */
                     $all_bots = Bot::where('enable','=',1)->get();
+                    /** @var Bot[] $bot_list */
                     $bot_list = [];
                     foreach ($all_bots as $per_bot) {
-                        $bot_list[$per_bot->username] = $per_bot;
+                        $key=serialize([
+                            $per_bot->uid,
+                            $per_bot->username,
+                            $per_bot->room
+                        ]);
+                        $bot_list[$key] = $per_bot;
                     }
                     // B.关闭不在BOT LIST上的机器人
                     foreach ($procs as $name => $proc) {
@@ -56,7 +63,7 @@ class BotCommand extends Command
                             $procs[$name]=new Process($per_bot->id);
                         }
                     }
-                    sleep(5);
+                    \Co::sleep(5);
                 }
             });
         });

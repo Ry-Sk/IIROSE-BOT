@@ -41,6 +41,7 @@ class JsPluginLoader extends PluginLoader implements Listenerable
             };
             $this->plugin->events=new JsEvents();
             $this->plugin->packets=new JsPackets();
+            $this->plugin->configure=$this->configure;
             $this->plugin->executeString(file_get_contents($this->basePath.'Plugin/'.$this->slug.'.js'));
             while (true){
                 if(!$this->load){break;}

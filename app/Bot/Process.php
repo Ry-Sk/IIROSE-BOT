@@ -23,7 +23,7 @@ class Process
             1 => array("pipe", "w"),
             2 => array("pipe", "w"),
         );
-        $this->pool = proc_open('/usr/bin/env php '.ROOT.'/adminphp bot:one '.$id,$descriptorspec,$pipes);
+        $this->pool = proc_open('php '.ROOT.'/adminphp bot:one '.$id,$descriptorspec,$pipes);
         $this->stdin=$pipes[0];
         $this->stdout=$pipes[1];
         $this->stderr=$pipes[2];
@@ -48,7 +48,7 @@ class Process
         go(function (){
             while (true){
                 try {
-                    $message=@\Co::fread($this->stdout);
+                    $message=\Co::fread($this->stdout,1024);
                     if($message){
                         echo $message;
                     }else{
@@ -65,7 +65,7 @@ class Process
         go(function (){
             while (true){
                 try {
-                    $message=@\Co::fread($this->stderr);
+                    $message=@\Co::fread($this->stderr,1024);
                     if($message){
                         echo $message;
                     }else{

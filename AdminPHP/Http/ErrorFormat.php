@@ -19,7 +19,7 @@ class ErrorFormat
         $i=count($tracks);
         foreach ($tracks as $track){
             $o.="\n".$i--.str_repeat(' ',4-strlen($i)).$track['class'].$track['type'].$track['function'];
-            $o.="\n".'    called in '.$track['file'].' on line '.$track['line'];
+            $o.="\n".'    called in '.@$track['file'].' on line '.@$track['line'];
         }
         Logger::warn($o);
         return $o;
