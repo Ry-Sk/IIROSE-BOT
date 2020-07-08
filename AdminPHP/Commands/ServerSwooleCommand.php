@@ -17,8 +17,8 @@ class ServerSwooleCommand extends Command
         $this->setProcessTitle('AdminPHP swoole server');
         $this->setDescription('Run AdminPHP with swoole.');
         $this->setHelp('You can run AdminPHP without apache/nginx...');
-        $this->addOption('host','s',InputOption::VALUE_REQUIRED,'Host you want run in.','127.0.0.1');
-        $this->addOption('port','p',InputOption::VALUE_REQUIRED,'Port you want run in.','8000');
+        $this->addOption('host','s',InputOption::VALUE_REQUIRED,'Host you want run in.','0.0.0.0');
+        $this->addOption('port','p',InputOption::VALUE_REQUIRED,'Port you want run in.','8008');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

@@ -18,4 +18,9 @@ class PhpPluginLoader extends PluginLoader implements Listenerable
         $this->plugin = new $plugin_class($this->bot, $this->configure, $this);
         $this->registerListeners($this->plugin);
     }
+    public function unload()
+    {
+        unset($this->plugin);
+        parent::unload();
+    }
 }

@@ -1,0 +1,22 @@
+[
+    {
+        "sign": "math:maxima",
+        "aliases":["m"],
+        "description": "使用高级的计算器吗~",
+        "help": "/math:maxima 算式",
+        "usages": [
+            "/math:maxima 1+1;"
+        ],
+        "arguments": [
+            {
+                "name": "shell",
+                "require": true,
+                "array": true,
+                "describle": "你要执行的算式",
+                "default": null
+            }
+        ],
+        "options": [
+        ]
+    }
+]

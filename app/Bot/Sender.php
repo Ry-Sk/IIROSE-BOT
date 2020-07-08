@@ -4,6 +4,10 @@
 namespace Bot;
 
 
+use Bot\Packets\ChatPacket;
+use Bot\Packets\PersonChatPacket;
+use Models\Bot;
+
 class Sender
 {
     const ROOM = 'R';
@@ -34,10 +38,10 @@ class Sender
     public function sendMessage($message,$color=null){
         switch ($this->type){
             case Sender::ROOM:
-                RunBot::$instance->sendChat($message,$color?:$this->getColor());
+                Bot::$instance->packet(new ChatPacket($message,$color?:$this->getColor()));
                 break;
             case Sender::PERSON:
-                RunBot::$instance->sendPersonChat($this->user_id,$message,$color?:$this->getColor());
+                Bot::$instance->packet(new PersonChatPacket($this->user_id,$message,$color?:$this->getColor()));
                 break;
         }
     }
