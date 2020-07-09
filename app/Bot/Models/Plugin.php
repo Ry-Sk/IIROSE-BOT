@@ -18,6 +18,8 @@ class Plugin
     protected $info;
     protected $slug;
     protected $basePath;
+    /** @var Bot $bot */
+    protected $bot;
     public static function find($slug){
         $plugin=new self();
         $plugin->slug=$slug;
@@ -48,15 +50,25 @@ class Plugin
      */
     public function load($bot, $configure)
     {
-        $this->pluginLoader = new $this->pluginLoaderClass($bot, $configure,$this->slug);
+        $this->bot=$bot;
+        $this->pluginLoader = new $this->pluginLoaderClass($this->bot, $configure,$this->slug);
         $this->pluginLoader->load();
         $commands=json_decode(file_get_contents($this->basePath.'/commands.json'));
         foreach ($commands as $command){
-            $bot->addCommand($command);
+            $this->bot->addCommand($command);
         }
     }
 
     public function reload($configure){
         $this->pluginLoader->reload($configure);
+    }
+
+    public function unload()
+    {
+        $commands=json_decode(file_get_contents($this->basePath.'/commands.json'));
+        foreach ($commands as $command){
+            $this->bot->removeCommand($command);
+        }
+        $this->pluginLoader->unload();
     }
 }

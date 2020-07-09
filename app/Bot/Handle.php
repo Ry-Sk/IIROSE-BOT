@@ -25,7 +25,7 @@ class Handle
         }
     }
     public function addListener(Listener $listener){
-        if(in_array($listener,$this->listeners)){
+        if(in_array($listener,$this->listeners,true)){
             return;
         }
         $this->listeners[]=$listener;

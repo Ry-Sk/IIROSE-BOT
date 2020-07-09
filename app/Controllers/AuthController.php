@@ -32,7 +32,7 @@ class AuthController extends \Controller\Controllers\Controller
                     $bot->username=$request->get('username');
                     $bot->password=$request->get('password');
                     $bot->token=uniqid('login');
-                    $bot->room='5ec5a94b4ed60';
+                    $bot->room='5f06817deec1d';
                     $bot->enable=0;
                     $bot->save();
                 }

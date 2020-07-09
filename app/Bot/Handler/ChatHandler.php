@@ -19,7 +19,7 @@ class ChatHandler implements Handler
 
     public function pharse($message)
     {
-        $a = explode('>',$message);
+        $a = Bot::decode(explode('>',$message));
         return new ChatEvent(
             $a[3],
             $a[4],

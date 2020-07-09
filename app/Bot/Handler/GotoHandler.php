@@ -3,6 +3,7 @@ namespace Bot\Handler;
 
 use Bot\Event\GotoEvent;
 use Bot\Handler;
+use Models\Bot;
 
 class GotoHandler implements Handler
 {
@@ -19,7 +20,7 @@ class GotoHandler implements Handler
 
     public function pharse($message)
     {
-        $a = explode('>',$message);
+        $a = Bot::decode(explode('>',$message));
         return new GotoEvent(
             $a[5],
             $a[8],

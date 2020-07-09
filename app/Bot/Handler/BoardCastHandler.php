@@ -18,7 +18,7 @@ class BoardCastHandler implements Handler
 
     public function pharse($message)
     {
-        $a = explode('>',$message);
+        $a = Bot::decode(explode('>',$message));
         return new BoardCastEvent(
             $a[1],
             $a[2],

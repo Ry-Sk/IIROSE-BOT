@@ -1,11 +1,11 @@
 [
     {
-        "sign": "math:maxima",
-        "aliases":["m"],
-        "description": "使用高级的计算器吗~",
-        "help": "/math:maxima 算式",
+        "sign": "js:eval",
+        "aliases":[],
+        "description": "运行js代码~",
+        "help": "/js:eval 算式",
         "usages": [
-            "/math:maxima 1+1;"
+            "/js:eval print(1+1);"
         ],
         "arguments": [
             {

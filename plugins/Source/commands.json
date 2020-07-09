@@ -1,0 +1,22 @@
+[
+  {
+    "sign": "test:send",
+    "aliases":["ts"],
+    "description": "发送原始消息~",
+    "help": "/test:send 原始消息",
+    "usages": [
+      "/ts +*5e5f9bd4b3e62"
+    ],
+    "arguments": [
+      {
+        "name": "message",
+        "require": true,
+        "array": false,
+        "describle": "需要发送的消息",
+        "default": null
+      }
+    ],
+    "options": [
+    ]
+  }
+]

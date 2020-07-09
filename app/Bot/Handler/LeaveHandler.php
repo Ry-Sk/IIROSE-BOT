@@ -3,6 +3,7 @@ namespace Bot\Handler;
 
 use Bot\Event\LeaveEvent;
 use Bot\Handler;
+use Models\Bot;
 
 class LeaveHandler implements Handler
 {
@@ -16,7 +17,7 @@ class LeaveHandler implements Handler
 
     public function pharse($message)
     {
-        $a = explode('>',$message);
+        $a = Bot::decode(explode('>',$message));
         return new LeaveEvent(
             $a[5],
             $a[8],

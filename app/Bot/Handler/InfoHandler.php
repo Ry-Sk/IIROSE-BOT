@@ -5,6 +5,7 @@ use Bot\Event\InfoEvent;
 use Bot\Event\JoinEvent;
 use Bot\Event\UserInfoEvent;
 use Bot\Handler;
+use Models\Bot;
 
 class InfoHandler implements Handler
 {
@@ -18,7 +19,7 @@ class InfoHandler implements Handler
 
     public function pharse($message)
     {
-        $a = explode('>',$message);
+        $a = Bot::decode(explode('>',$message));
         $event = new InfoEvent();
         $event->user_id = $a[3];
         $event->first_name = $a[5];

@@ -16,6 +16,7 @@ class SwooleCoServer
             $keneral=new Keneral();
             $keneral->init();
             $keneral->start();
+            new DataBase();
             $http = new Server($host, $port);
             $http->handle('',function ($swoole_request, $swoole_response)use($keneral){
                 /** @var $swoole_request \Swoole\Http\Request */

@@ -4,12 +4,13 @@ namespace Bot\Handler;
 use Bot\Event\InfoEvent;
 use Bot\Event\JoinEvent;
 use Bot\Event\NoUserEvent;
+use Bot\Event\PayEvent;
 use Bot\Event\UserInfoEvent;
 use Bot\Handler;
+use Models\Bot;
 
 class PayHandler implements Handler
 {
-
     public function isPacket($message, $firstChar, $count, $explode)
     {
         if ($count==7
@@ -21,13 +22,15 @@ class PayHandler implements Handler
 
     public function pharse($message)
     {
-        $a = explode('>',$message);
+        $a = Bot::decode(explode('>',$message));
+        $ma=explode(' ',$a[3]);
         return new PayEvent(
             $a[6],
             substr($a[0], 2),
             $a[1],
             $a[5],
-            substr($a[3], 2)
+            substr($ma[0], 2),
+            isset($ma[2])?substr($a[3], strlen($ma[0]+1)):null
         );
     }
 }

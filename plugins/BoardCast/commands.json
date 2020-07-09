@@ -1,0 +1,22 @@
+[
+  {
+    "sign": "boardcast:send",
+    "aliases":["bs"],
+    "description": "发送弹幕",
+    "help": "/bs",
+    "usages": [
+      "/bs 23333 发送23333"
+    ],
+    "arguments": [
+      {
+        "name": "message",
+        "require": true,
+        "array": false,
+        "describle": "发送的消息",
+        "default": null
+      }
+    ],
+    "options": [
+    ]
+  }
+]

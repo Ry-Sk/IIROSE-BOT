@@ -5,21 +5,20 @@ namespace Plugin\Assert;
 
 use Bot\Event\ChatEvent;
 use Bot\Event\CommandEvent;
+use Bot\Event\InfoEvent;
+use Bot\Event\LikeEvent;
+use Bot\Event\UserInfoEvent;
 use Bot\Packets\ChatPacket;
+use Bot\Packets\LikePacket;
+use Bot\Packets\SourcePacket;
 use Bot\PluginLoader\PhpPlugin\PhpPlugin;
+use Models\Bot;
 
 class Assert extends PhpPlugin
 {
-    public function onChat(ChatEvent $event)
+    public function onLike(LikeEvent $event)
     {
-        if ($event->message=='表白'.$this->bot->username) {
-            $this->bot->packet(new ChatPacket(' [*'.$event->user_name.'*] 谢谢'));
-        }
-    }
-    public function onCommand(CommandEvent $event){
-        if($event->sign=='t:t'){
-            $event->output->write('好耶！测试完成');
-            echo 'write了';
-        }
+        $user_id=$this->bot->getUserId($event->user_name);
+        $this->bot->packet(new LikePacket($user_id));
     }
 }

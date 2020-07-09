@@ -4,6 +4,8 @@ namespace Models;
 use Bot\Models\Plugin;
 use Bot\PluginLoader;
 use Console\ErrorFormat;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Logger\Logger;
 use Model\Models\Model;
 
 /**
@@ -41,7 +43,13 @@ class BotPlugin extends Model
     protected $bot;
     /** @var Plugin $plugin */
     protected $plugin;
+    protected $isload;
     public function loading($bot){
+        if($this->isload){
+            return;
+        }
+        Logger::info('加载插件'.$this->id.':'.$this->slug);
+        $this->isload=true;
         $this->bot=$bot;
         $this->plugin=Plugin::find($this->slug);
         $this->plugin->load($bot,$this->configure);
@@ -51,8 +59,14 @@ class BotPlugin extends Model
                     $config=$this->configure;
                     $this->refresh();
                     if($config!=$this->configure){
+                        Logger::info('重载插件'.$this->id.':'.$this->slug);
                         $this->plugin->reload($this->configure);
                     }
+                }catch (ModelNotFoundException $e){
+                    Logger::info('卸载插件'.$this->id.':'.$this->slug);
+                    $this->plugin->unload();
+                    $this->isload=false;
+                    return;
                 }catch (\Throwable $e){
                     ErrorFormat::dump($e);
                 }

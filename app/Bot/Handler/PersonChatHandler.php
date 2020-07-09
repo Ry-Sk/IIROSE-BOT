@@ -3,6 +3,7 @@ namespace Bot\Handler;
 
 use Bot\Event\PersonChatEvent;
 use Bot\Handler;
+use Models\Bot;
 
 class PersonChatHandler implements Handler
 {
@@ -16,7 +17,7 @@ class PersonChatHandler implements Handler
 
     public function pharse($message)
     {
-        $a = explode('>',$message);
+        $a = Bot::decode(explode('>',$message));
         return new PersonChatEvent(
             $a[3],
             $a[4],

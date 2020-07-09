@@ -26,6 +26,7 @@ class OneBotCommand extends Command
     {
         $this->setProcessTitle('IIROSE-BOT '.$input->getArgument('id'));
         \Co\run(function () use ($input) {
+            \Co::set(['hook_flags' => SWOOLE_HOOK_ALL | SWOOLE_HOOK_CURL]);
             new DataBase();
             $bot=Bot::find($input->getArgument('id'));
             $bot->run();

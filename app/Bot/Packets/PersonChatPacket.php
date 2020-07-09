@@ -34,14 +34,12 @@ class PersonChatPacket implements \Bot\Packet
     public function compile()
     {
         return json_encode(
-            json_encode(
-                [
-                    'g' => $this->user_id,
-                    'm' => $this->message,
-                    'mc' => $this->color,
-                    'i' => uniqid($this->message)
-                ]
-            )
+            [
+                'g' => $this->user_id,
+                'm' => $this->message,
+                'mc' => $this->color,
+                'i' => uniqid($this->message)
+            ]
         );
     }
 }

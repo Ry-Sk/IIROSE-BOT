@@ -1,3 +1,5 @@
 storge
 vendor
 composer.lock
+.composer
+.bash_history
