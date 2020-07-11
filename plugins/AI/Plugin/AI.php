@@ -11,7 +11,7 @@ use GuzzleHttp\Client;
 
 class AI extends PhpPlugin
 {
-    public function onChat(ChatEvent $event)
+    public function chsadghsjxcvashg(ChatEvent $event)
     {
         if (substr_count($event->message, $this->bot->username)) {
             try {

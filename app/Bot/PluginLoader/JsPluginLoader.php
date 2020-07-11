@@ -6,6 +6,7 @@ use Bot\Listener;
 use Bot\Listenerable;
 use Bot\PluginLoader;
 use Bot\PluginLoader\JsPlugin\JsPackets;
+use Console\ErrorFormat;
 use File\Path;
 use Bot\PluginLoader\JsPlugin\JsEvents;
 use Models\Bot;
@@ -25,31 +26,38 @@ class JsPluginLoader extends PluginLoader implements Listenerable
         $this->basePath=Path::formt_dir(ROOT.'/plugins/'.$this->slug);
         $this->receiveQueue=new SplQueue();
         go(function(){
-            $this->plugin=new V8Js('IB');
-            $this->plugin->setTimeLimit(5000);
-            $this->plugin->setMemoryLimit(1024*1024*512);// 512M
-            $this->plugin->setModuleLoader(function ($name){
-                var_dump($name);
-                return file_get_contents($this->basePath.'Plugin/'.$name.'.js');
-            });
-            //$this->plugin->setModuleNormaliser();
-            $this->plugin->addListener=function($event,$listener){
-                $this->addListener($event,$listener);
-            };
-            $this->plugin->sendPacket=function($packet){
-                $this->bot->packet($packet);
-            };
-            $this->plugin->events=new JsEvents();
-            $this->plugin->packets=new JsPackets();
-            $this->plugin->configure=$this->configure;
-            $this->plugin->executeString(file_get_contents($this->basePath.'Plugin/'.$this->slug.'.js'));
-            while (true){
-                if(!$this->load){break;}
-                if($this->receiveQueue->count()) {
-                    $call=$this->receiveQueue->pop();
-                    $call();
+            try {
+                $this->plugin = new V8Js('IB');
+                $this->plugin->setTimeLimit(5000);
+                $this->plugin->setMemoryLimit(1024 * 1024 * 512);// 512M
+                $this->plugin->setModuleLoader(function ($name) {
+                    var_dump($name);
+                    return file_get_contents($this->basePath . 'Plugin/' . $name . '.js');
+                });
+                //$this->plugin->setModuleNormaliser();
+                $this->plugin->addListener = function ($event, $listener) {
+                    $this->addListener($event, $listener);
+                };
+                $this->plugin->sendPacket = function ($packet) {
+                    $this->bot->packet($packet);
+                };
+                $this->plugin->events = new JsEvents();
+                $this->plugin->packets = new JsPackets();
+                $this->plugin->configure = $this->configure;
+                $this->plugin->executeString(file_get_contents($this->basePath . 'Plugin/' . $this->slug . '.js'));
+                while (true) {
+                    if (!$this->load) {
+                        break;
+                    }
+                    if ($this->receiveQueue->count()) {
+                        $call = $this->receiveQueue->pop();
+                        $call();
+                    }
+                    \Co::sleep(0.1);
                 }
-                \Co::sleep(0.1);
+            }catch (\Throwable $e){
+                ErrorFormat::dump($e);
+                echo '没有V8JS拓展不能加载使用js编写的插件'."\n";
             }
         });
     }
