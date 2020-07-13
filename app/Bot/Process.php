@@ -48,7 +48,7 @@ class Process
         go(function (){
             while (true){
                 try {
-                    $message=\Co::fread($this->stdout,1024);
+                    $message=\Co::fread($this->stdout,4096);
                     if($message){
                         echo $message;
                     }else{
@@ -65,7 +65,7 @@ class Process
         go(function (){
             while (true){
                 try {
-                    $message=@\Co::fread($this->stderr,1024);
+                    $message=@\Co::fread($this->stderr,4096);
                     if($message){
                         echo $message;
                     }else{
