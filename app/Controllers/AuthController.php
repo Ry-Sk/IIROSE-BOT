@@ -43,8 +43,10 @@ class AuthController extends \Controller\Controllers\Controller
                         'token'=>$bot->token,
                     ],
                 ]);
+            }else{
+                throw new AuthException("密码错误");
             }
         }
-        throw new AuthException();
+        throw new AuthException("无法连接API");
     }
 }

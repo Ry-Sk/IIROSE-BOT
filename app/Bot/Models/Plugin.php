@@ -3,12 +3,15 @@ namespace Bot\Models;
 
 use Bot\Exception\BotException;
 use Bot\PluginLoader;
+use Exceptions\PluginNonExistException;
+use Exceptions\ValidationException;
 use File\File;
 use File\Path;
 use Illuminate\Support\Str;
 use Model\Models\Model;
 use Models\Bot;
 use Parsedowns\ConfigureParse;
+use Vaildator\Vaildator;
 
 class Plugin
 {
@@ -21,11 +24,14 @@ class Plugin
     /** @var Bot $bot */
     protected $bot;
     public static function find($slug){
+        if(!$slug){
+            throw new PluginNonExistException();
+        }
         $plugin=new self();
         $plugin->slug=$slug;
         $plugin->basePath=Path::get_absolute_path(ROOT.'/plugins/'.$plugin->slug);
         if(!is_dir($plugin->basePath)){
-            throw new BotException();
+            throw new PluginNonExistException();
         }
         $plugin->info=json_decode(file_get_contents($plugin->basePath.'/plugin.json'));
         $classSlug=strtoupper(substr($plugin->info->loader,0,1)).substr($plugin->info->loader,1);
@@ -34,15 +40,63 @@ class Plugin
     }
 
     public function getConfig(){
-        return json_decode(file_get_contents($this->basePath.'/config.json'),true);
+        $doms=json_decode(file_get_contents($this->basePath.'/config.json'),true);
+        $result=[];
+        foreach ($doms as $dom) {
+            if(isset($dom['_name'])){
+                $answer=[];
+                $answer['_name']=$dom['_name'];
+                if(isset($dom['_default'])){
+                    $answer['_default']=$dom['_default'];
+                }
+                if(isset($dom['_validate'])){
+                    $answer['_validate']=$dom['_validate'];
+                }
+                $result[]=$answer;
+            }
+        }
+        return $result;
+    }
+    public function getDefaultConfig(){
+        $result=[];
+        foreach($this->getConfig() as $dom){
+            $result[$dom['_name']]=isset($dom['_default'])?$dom['_default']:null;
+        }
+        return $result;
     }
     public function getConfigurePage($configure){
-        $parser=new ConfigureParse(
+        var_dump($configure);
+        $doms=json_decode(file_get_contents($this->basePath.'/config.json'),true);
+        $result=[];
+        foreach ($doms as $dom) {
+            if(isset($dom['_name'])){
+                $dom['_value']=$configure[$dom['_name']];
+                $result[]=$dom;
+            }
+        }
+        return $result;
+        /**$parser=new ConfigureParse(
             $this->getConfig(),
             $configure
         );
-        return $parser->parse(file_get_contents($this->basePath.'/config.md'));
+        return $parser->parse(file_get_contents($this->basePath.'/config.md'));**/
     }
+    public function verifyConfigure($configure)
+    {
+        $result=[];
+        $verify=[];
+        foreach($this->getConfig() as $dom){
+            $result[$dom['_name']]=@$configure[$dom['_name']];
+            $verify[$dom['_name']]=@$dom['_validate']?:'required';
+        }
+        $validator= Vaildator::getInstance()->make($result,$verify)->errors()->all();
+        if($validator){
+            throw new ValidationException(json_encode($validator));
+        }
+        return $result;
+    }
+
+
 
     /**
      * @param Bot $bot

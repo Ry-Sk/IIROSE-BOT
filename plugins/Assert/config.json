@@ -1,6 +1,7 @@
 [
   {
-    "tag": "input",
-    "_validate": "t"
+    "_name": "reply",
+    "_default": "hi，这是默认配置！",
+    "_validate": ""
   }
 ]

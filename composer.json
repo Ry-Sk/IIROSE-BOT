@@ -15,8 +15,9 @@
       "ext-zlib": "*",
         "guzzlehttp/guzzle": "^7.0",
         "erusev/parsedown": "^1.7",
-      "ext-v8js": "*",
-      "ext-bcmath": "*"
+      "ext-bcmath": "*",
+        "illuminate/validation": "^7.20",
+      "ext-v8js": "*"
     },
   "autoload": {
     "files": [
