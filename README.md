@@ -55,7 +55,7 @@ composer install
 运行站点
 
 ```shell
-./iirose-bot run
+./iirosebot run
 ```
 
 访问测试[http://localhost:8008](http://localhost:8008)
