@@ -6,6 +6,7 @@ namespace Bot;
 
 class Process
 {
+    private $name;
     private $pool;
     private $stdin;
     private $stdout;
@@ -16,18 +17,19 @@ class Process
         @proc_close($this->pool);
     }
 
-    public function __construct($id)
+    public function __construct($command,$name)
     {
         $descriptorspec = array(
             0 => array("pipe", "r"),
             1 => array("pipe", "w"),
             2 => array("pipe", "w"),
         );
-        $this->pool = proc_open('php '.ROOT.'/adminphp bot:one '.$id,$descriptorspec,$pipes);
+        $this->pool = proc_open($command,$descriptorspec,$pipes);
         $this->stdin=$pipes[0];
         $this->stdout=$pipes[1];
         $this->stderr=$pipes[2];
         $this->std();
+        $this->name=$name;
     }
 
     public function check()
@@ -48,8 +50,15 @@ class Process
         go(function (){
             while (true){
                 try {
-                    $message=\Co::fread($this->stdout,4096);
+                    $message=@\Co::fread($this->stdout,4096);
                     if($message){
+                        $messages=explode("\n",$message);
+                        foreach ($messages as $k=>$v){
+                            if(!$v){
+                                unset($messages[$k]);
+                            }
+                        }
+                        $message=$this->name.implode("\n".$this->name,$messages)."\n";
                         echo $message;
                     }else{
                         throw new \Exception();
@@ -67,6 +76,13 @@ class Process
                 try {
                     $message=@\Co::fread($this->stderr,4096);
                     if($message){
+                        $messages=explode("\n",$message);
+                        foreach ($messages as $k=>$v){
+                            if(!$v){
+                                unset($messages[$k]);
+                            }
+                        }
+                        $message=$this->name.implode("\n".$this->name,$messages)."\n";
                         echo $message;
                     }else{
                         throw new \Exception();

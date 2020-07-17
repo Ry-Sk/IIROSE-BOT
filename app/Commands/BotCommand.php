@@ -60,7 +60,7 @@ class BotCommand extends Command
                     // D.加载机器人
                     foreach ($bot_list as $name=>$per_bot) {
                         if(!@$procs[$name]){
-                            $procs[$name]=new Process($per_bot->id);
+                            $procs[$name]=new Process('php '.ROOT.'/iirosebot bot:one '.$per_bot->id,'['.$per_bot->username.']:');
                         }
                     }
                     \Co::sleep(5);

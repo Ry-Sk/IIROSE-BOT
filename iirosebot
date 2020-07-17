@@ -4,8 +4,3 @@ define('ROOT',__DIR__);
 require_once ROOT.'/AdminPHP/init.php';
 use Console\Console;
 new Console();
-/**
- * apt install cpp
- * apt install make
- * apt install libxml2-dev
- */

@@ -67,13 +67,12 @@ class PluginController extends \Controller\Controllers\Controller
     }
     public function removePlugin(Request $request){
         $bot=Bot::authOrFail($request->getOrFail('token'));
-        $plugin=Plugin::find($request->getOrFail("slug"));
-        $botPlugin=BotPlugin
-            ::where("bot_id","=",$bot->id)
-            ->where("slug","=",$request->getOrFail("slug"))
-            ->first();
+        $botPlugin=BotPlugin::findOrFail($request->getOrFail("id"));
         if(!$botPlugin){
             throw new PluginNonExistException();
+        }
+        if($botPlugin->bot_id!=$bot->id){
+            throw new PermissionDenyException("不是你的bot");
         }
         $botPlugin->delete();
         return new JsonResponse();
