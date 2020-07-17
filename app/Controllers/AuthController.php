@@ -34,7 +34,7 @@ class AuthController extends \Controller\Controllers\Controller
                     $bot->token=uniqid('login');
                     $bot->room='5f06817deec1d';
                     $bot->enable=0;
-                    $bot->save();
+                    $bot->saveOrFail();
                 }
                 return new \Http\Responses\JsonResponse([
                     'success'=>true,

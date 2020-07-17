@@ -14,7 +14,8 @@ class Process
 
     public function kill()
     {
-        @proc_close($this->pool);
+        //proc_close($this->pool);
+        proc_terminate($this->pool);
     }
 
     public function __construct($command,$name)

@@ -16,7 +16,7 @@ class PluginLoader implements Listenerable
     public function __construct($bot, $configure,$slug)
     {
         $this->bot=$bot;
-        $this->configure=json_decode($configure);
+        $this->configure=json_decode($configure,true);
         $this->slug=$slug;
     }
     public function load(){
@@ -27,12 +27,16 @@ class PluginLoader implements Listenerable
     }
     public function reload($configure){
         $this->unload();
-        $this->configure=$configure;
+        $this->configure=json_decode($configure,true);
         $this->load();
     }
 
     public function loaded()
     {
         return $this->load;
+    }
+
+    public function tick()
+    {
     }
 }

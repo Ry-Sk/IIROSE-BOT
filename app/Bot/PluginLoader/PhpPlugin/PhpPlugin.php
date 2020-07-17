@@ -18,4 +18,7 @@ class PhpPlugin
         $this->config = $config;
         $this->pluginLoader = $pluginLoader;
     }
+    public function tick(){
+
+    }
 }

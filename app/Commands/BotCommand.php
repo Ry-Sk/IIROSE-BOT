@@ -26,12 +26,14 @@ class BotCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         \Co\run(function (){
-            \Swoole\Runtime::enableCoroutine(SWOOLE_HOOK_ALL);
+            \Swoole\Runtime::enableCoroutine(SWOOLE_HOOK_ALL | SWOOLE_HOOK_CURL);
             new DataBase();
             go(function (){
                 /** @var Process[] $procs */
                 $procs=[];
                 while (true){
+
+                    //echo 'checkA';
                     // A.将数据库转换为BOT LIST
                     /** @var Bot[] $all_bots */
                     $all_bots = Bot::where('enable','=',1)->get();
@@ -45,25 +47,33 @@ class BotCommand extends Command
                         ]);
                         $bot_list[$key] = $per_bot;
                     }
+
+                    //echo 'checkB';
                     // B.关闭不在BOT LIST上的机器人
                     foreach ($procs as $name => $proc) {
                         if (!@$bot_list[$name]) {
                             $proc->kill();
                         }
                     }
+
+                    //echo 'checkC';
                     // C.销毁死亡的机器人
                     foreach ($procs as $name => $proc) {
                         if(!$proc->check()){
                             unset($procs[$name]);
                         }
                     }
+
+                    //echo 'checkD';
                     // D.加载机器人
                     foreach ($bot_list as $name=>$per_bot) {
                         if(!@$procs[$name]){
                             $procs[$name]=new Process('php '.ROOT.'/iirosebot bot:one '.$per_bot->id,'['.$per_bot->username.']:');
                         }
                     }
+                    //echo 'checkE';
                     \Co::sleep(5);
+                    //echo 'checkF';
                 }
             });
         });

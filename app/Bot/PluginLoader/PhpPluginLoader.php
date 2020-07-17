@@ -5,10 +5,12 @@ use Bot\AutoListener;
 use Bot\Listener;
 use Bot\Listenerable;
 use Bot\PluginLoader;
+use Bot\PluginLoader\PhpPlugin\PhpPlugin;
 
 class PhpPluginLoader extends PluginLoader implements Listenerable
 {
     use AutoListener;
+    /** @var PhpPlugin $plugin */
     public $plugin;
     public function load()
     {
@@ -22,5 +24,10 @@ class PhpPluginLoader extends PluginLoader implements Listenerable
     {
         unset($this->plugin);
         parent::unload();
+    }
+    public function tick()
+    {
+        parent::tick();
+        $this->plugin->tick();
     }
 }

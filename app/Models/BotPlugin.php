@@ -53,25 +53,27 @@ class BotPlugin extends Model
         $this->bot=$bot;
         $this->plugin=Plugin::find($this->slug);
         $this->plugin->load($bot,$this->configure);
-        go(function (){
-            while (true){
-                try{
-                    $config=$this->configure;
-                    $this->refresh();
-                    if($config!=$this->configure){
-                        Logger::info('重载插件'.$this->id.':'.$this->slug);
-                        $this->plugin->reload($this->configure);
-                    }
-                }catch (ModelNotFoundException $e){
-                    Logger::info('卸载插件'.$this->id.':'.$this->slug);
-                    $this->plugin->unload();
-                    $this->isload=false;
-                    return;
-                }catch (\Throwable $e){
-                    ErrorFormat::dump($e);
-                }
-                \Co::sleep(5);
+    }
+    public function check()
+    {
+        try{
+            $config=$this->configure;
+            $this->refresh();
+            if($config!=$this->configure){
+                Logger::info('重载插件'.$this->id.':'.$this->slug);
+                $this->plugin->reload($this->configure);
             }
-        });
+        }catch (ModelNotFoundException $e){
+            Logger::info('卸载插件'.$this->id.':'.$this->slug);
+            $this->plugin->unload();
+            $this->isload=false;
+            return;
+        }catch (\Throwable $e){
+            ErrorFormat::dump($e);
+        }
+    }
+    public function tick()
+    {
+        $this->plugin->tick();
     }
 }

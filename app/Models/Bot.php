@@ -138,36 +138,38 @@ class Bot extends Model implements Listenerable
         go(function () {
             $this->timer();
         });
+        go(function () {
+            $this->ticker();
+        });
     }
 
     private function plugin()
     {
-        try {
-            while(true) {
-                try {
-                    $plugins_list = BotPlugin::findByBot($this);
-                    $plugins=[];
-                    foreach ($plugins_list as $plugin){
-                        $plugins[$plugin->id]=$plugin;
-                    }
-                    foreach ($plugins as $plugin) {
-                        if(!isset($this->plugins[$plugin->id])){
-                            $this->plugins[$plugin->id]=$plugin;
-                            $this->plugins[$plugin->id]->loading($this);
-                        }
-                    }
-                    foreach ($this->plugins as $plugin) {
-                        if(!isset($plugins[$plugin->id])){
-                            unset($this->plugins[$plugin->id]);
-                        }
-                    }
-                }catch (Throwable $e){
-                    ErrorFormat::dump($e);
+        while(true) {
+            try {
+                $plugins_list = BotPlugin::findByBot($this);
+                $plugins=[];
+                foreach ($plugins_list as $plugin){
+                    $plugins[$plugin->id]=$plugin;
                 }
-                \Co::sleep(5);
+                foreach ($plugins as $plugin) {
+                    if(!isset($this->plugins[$plugin->id])){
+                        $this->plugins[$plugin->id]=$plugin;
+                        $this->plugins[$plugin->id]->loading($this);
+                    }
+                }
+                foreach ($this->plugins as $plugin) {
+                    if(!isset($plugins[$plugin->id])){
+                        unset($this->plugins[$plugin->id]);
+                    }
+                }
+                foreach ($this->plugins as $plugin) {
+                    $this->plugins[$plugin->id]->check();
+                }
+            }catch (Throwable $e){
+                ErrorFormat::dump($e);
             }
-        } catch (NetworkException $e) {
-            ErrorFormat::dump($e);
+            \Co::sleep(5);
         }
     }
 
@@ -236,6 +238,14 @@ class Bot extends Model implements Listenerable
         }
         );
     }
+    private function ticker()
+    {
+        while (true) {
+            foreach ($this->plugins as $plugin){
+                $plugin->tick();
+            }
+        }
+    }
 
     private function solve($message)
     {
@@ -292,7 +302,7 @@ class Bot extends Model implements Listenerable
     public function setRoom($room)
     {
         $this->room = $room;
-        $this->save();
+        $this->saveOrFail();
     }
 
 
@@ -309,7 +319,7 @@ class Bot extends Model implements Listenerable
             }
             $d = $output->fetch();
             if (strlen($d)) {
-                $this->packet(new ChatPacket('\\\\\\=' . $d, $chatEvent->color ?: null));
+                $this->packet(new ChatPacket($d, $chatEvent->color ?: null));
             }
         }
     }
@@ -327,7 +337,7 @@ class Bot extends Model implements Listenerable
             }
             $d = $output->fetch();
             if (strlen($d)) {
-                $this->packet(new PersonChatPacket($personChatEvent->user_id, '\\\\\\=' . $output->fetch(), $personChatEvent->color ?: null));
+                $this->packet(new PersonChatPacket($personChatEvent->user_id, $output->fetch(), $personChatEvent->color ?: null));
             }
         }
     }

@@ -125,4 +125,9 @@ class Plugin
         }
         $this->pluginLoader->unload();
     }
+
+    public function tick()
+    {
+        $this->pluginLoader->tick();
+    }
 }

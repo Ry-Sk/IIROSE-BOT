@@ -6,7 +6,6 @@
       "ext-swoole": "*",
         "swoole/ide-helper": "^4.5",
         "symfony/routing": "^5.1",
-      "ext-http": "*",
       "ext-fileinfo": "*",
         "symfony/http-foundation": "^5.1",
         "illuminate/view": "^7.18",
@@ -17,6 +16,7 @@
         "erusev/parsedown": "^1.7",
       "ext-bcmath": "*",
         "illuminate/validation": "^7.20",
+        "dg/rss-php": "^1.4",
       "ext-v8js": "*"
     },
   "autoload": {

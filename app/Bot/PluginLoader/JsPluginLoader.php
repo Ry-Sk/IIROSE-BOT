@@ -25,8 +25,25 @@ class JsPluginLoader extends PluginLoader implements Listenerable
         $this->load=true;
         $this->basePath=Path::formt_dir(ROOT.'/plugins/'.$this->slug);
         $this->receiveQueue=new SplQueue();
-        go(function(){
-            try {
+    }
+    public function addListener($event,$listener){
+        $className=$event;
+        if(substr($className,0,10)=='Bot\\Event\\'){
+            $slug=substr($className,10,strlen($className)-15);
+            $className='Bot\\Handler\\'.$slug.'Handler';
+            Bot::$instance->getHandler($className)->addListener(
+                new Listener($this,function($event)use($listener){
+                    $this->receiveQueue->push(function ()use($event,$listener){
+                        $listener($event);
+                    });
+                })
+            );
+        }
+    }
+    public function tick()
+    {
+        try {
+            if (is_null($this->plugin)) {
                 $this->plugin = new V8Js('IB');
                 $this->plugin->setTimeLimit(5000);
                 $this->plugin->setMemoryLimit(1024 * 1024 * 512);// 512M
@@ -45,34 +62,14 @@ class JsPluginLoader extends PluginLoader implements Listenerable
                 $this->plugin->packets = new JsPackets();
                 $this->plugin->configure = $this->configure;
                 $this->plugin->executeString(file_get_contents($this->basePath . 'Plugin/' . $this->slug . '.js'));
-                while (true) {
-                    if (!$this->load) {
-                        break;
-                    }
-                    if ($this->receiveQueue->count()) {
-                        $call = $this->receiveQueue->pop();
-                        $call();
-                    }
-                    \Co::sleep(0.1);
-                }
-            }catch (\Throwable $e){
-                ErrorFormat::dump($e);
-                echo '没有V8JS拓展不能加载使用js编写的插件'."\n";
             }
-        });
-    }
-    public function addListener($event,$listener){
-        $className=$event;
-        if(substr($className,0,10)=='Bot\\Event\\'){
-            $slug=substr($className,10,strlen($className)-15);
-            $className='Bot\\Handler\\'.$slug.'Handler';
-            Bot::$instance->getHandler($className)->addListener(
-                new Listener($this,function($event)use($listener){
-                    $this->receiveQueue->push(function ()use($event,$listener){
-                        $listener($event);
-                    });
-                })
-            );
+            if ($this->receiveQueue->count()) {
+                $call = $this->receiveQueue->pop();
+                $call();
+            }
+            \Co::sleep(0.1);
+        }catch (\Throwable $e){
+            ErrorFormat::dump($e);
         }
     }
 }

@@ -45,7 +45,7 @@ class PluginController extends \Controller\Controllers\Controller
             throw new ParmsCheckException();
         }
         $botPlugin->configure=$plugin->verifyConfigure(json_decode($configureSource,true));
-        $botPlugin->save();
+        $botPlugin->saveOrFail();
         return new JsonResponse();
     }
     public function addPlugin(Request $request){
