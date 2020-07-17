@@ -1,3 +1,5 @@
 {
-  "loader": "php"
+  "loader": "php",
+  "author": "hs_err",
+  "describe": "点赞自动回赞~（点踩自动回踩）"
 }

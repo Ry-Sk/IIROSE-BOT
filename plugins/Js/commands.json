@@ -3,7 +3,7 @@
         "sign": "js:eval",
         "aliases":[],
         "description": "运行js代码~",
-        "help": "/js:eval 算式",
+        "help": "/js:eval 代码\n使用print();和var_dump();输出",
         "usages": [
             "/js:eval print(1+1);"
         ],
@@ -12,7 +12,7 @@
                 "name": "shell",
                 "require": true,
                 "array": true,
-                "describle": "你要执行的算式",
+                "describle": "你要执行的代码",
                 "default": null
             }
         ],

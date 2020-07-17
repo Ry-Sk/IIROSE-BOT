@@ -1,3 +1,5 @@
 {
-  "loader": "php"
+  "loader": "php",
+  "author": "hs_err",
+  "describe": "神器~收到转账自动点赞~哈哈（讨饭必备讨饭碗）"
 }

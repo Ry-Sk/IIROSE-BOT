@@ -17,6 +17,5 @@ class Welcome extends PhpPlugin
     public function onJoin(JoinEvent $event)
     {
         $this->bot->packet(new ChatPacket(' [*'.$event->user_name.'*] 欢迎～',$event->color));
-        //$this->bot->packet(new LikePacket($event->user_id));
     }
 }

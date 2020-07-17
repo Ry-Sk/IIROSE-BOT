@@ -1,3 +1,5 @@
 {
-  "loader": "php"
+  "loader": "php",
+  "author": "hs_err",
+  "describe": "一个名为js的php插件...执行js代码"
 }
