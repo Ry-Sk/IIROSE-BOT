@@ -74,6 +74,8 @@ class BotPlugin extends Model
     }
     public function tick()
     {
-        $this->plugin->tick();
+        if($this->plugin) {
+            $this->plugin->tick();
+        }
     }
 }

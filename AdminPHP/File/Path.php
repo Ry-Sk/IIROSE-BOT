@@ -8,13 +8,39 @@ use Phar;
 
 class Path
 {
+    private static $instance;
+    private $temp_path;
+    public function __construct()
+    {
+        $this->temp_path=self::formt_dir(sys_get_temp_dir().'/iiroseBot'.posix_getpid());
+        self::$instance=$this;
+    }
+    public function __destruct()
+    {
+        unlink($this->temp_path);
+    }
+
+    public static function temp_path($file=''){
+        if(!self::$instance){
+            new Path();
+        }
+        $dir=self::formt_dir(self::$instance->temp_path);
+        var_dump(dirname($dir.$file));
+        if(!is_dir(dirname($dir.$file))){
+            mkdir(dirname($dir.$file),0777,true);
+        }
+        return self::formt_file($dir.$file);
+    }
     public static function storge_path($file=''){
         $dir=self::formt_dir(self::get_absolute_path(
             dirname(Phar::running(false))?
                 dirname(Phar::running(false)).'/storge/':
                 ROOT.'/storge/'));
         if(!is_dir($dir)){
-            mkdir($dir);
+            mkdir($dir,0777,true);
+        }
+        if(!is_dir(dirname($dir.$file))){
+            mkdir(dirname($dir.$file),0777,true);
         }
         return self::formt_file($dir.$file);
     }

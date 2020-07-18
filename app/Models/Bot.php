@@ -244,6 +244,7 @@ class Bot extends Model implements Listenerable
             foreach ($this->plugins as $plugin){
                 $plugin->tick();
             }
+            \Co::sleep(0.1);
         }
     }
 

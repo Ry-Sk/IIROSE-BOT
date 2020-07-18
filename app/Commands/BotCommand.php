@@ -25,8 +25,8 @@ class BotCommand extends Command
     }
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        \Co::set(['hook_flags' => SWOOLE_HOOK_ALL | SWOOLE_HOOK_CURL]);
         \Co\run(function (){
-            \Swoole\Runtime::enableCoroutine(SWOOLE_HOOK_ALL | SWOOLE_HOOK_CURL);
             new DataBase();
             go(function (){
                 /** @var Process[] $procs */

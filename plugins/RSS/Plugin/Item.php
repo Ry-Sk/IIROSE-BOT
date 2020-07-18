@@ -3,6 +3,8 @@
 
 namespace Plugin\RSS;
 
+use File\Path;
+
 /**
  * @property string $title
  * @property string $link
@@ -24,10 +26,11 @@ class Item
         return (string)$this->item->$name;
     }
     public function getMessage(){
-        \Co::exec('docker run surnet/alpine-wkhtmltopdf:3.10-0.12.6-full /bin/wkhtmltoimage https://www.baidu.com/ - > test.png');
+        $storgePath=Path::storge_path('public/plugins/rss/'.md5($this->description).'.png');
+        \Co::exec('timeout 5 docker run --rm=true hserr/wkhtmltoimage "'.addslashes('data:text/html;charset=utf-8;base64,'.base64_encode($this->description)).'" - > "'.addslashes($storgePath).'"');
         return "新的RSS推送
 标题：$this->title
-描述：$this->description
+描述：[".url('storge/plugins/rss/'.basename($storgePath))."]
 链接：$this->link
 推送时间：$this->pubDate";
     }

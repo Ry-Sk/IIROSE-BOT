@@ -17,7 +17,9 @@
       "ext-bcmath": "*",
         "illuminate/validation": "^7.20",
         "dg/rss-php": "^1.4",
-      "ext-v8js": "*"
+      "ext-v8js": "*",
+      "ext-curl": "*",
+        "yurunsoft/yurun-http": "^4.2"
     },
   "autoload": {
     "files": [

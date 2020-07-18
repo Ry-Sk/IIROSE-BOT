@@ -2,13 +2,15 @@
 host=${1:-0.0.0.0}
 port=${2:-8008}
 echo listened $host:$port
-docker pull surnet/alpine-wkhtmltopdf:3.10-0.12.6-full
+docker pull hserr/wkhtmltoimage
+docker pull jgoldfar/maxima-docker:debian-latest
 docker run -it \
   --name="iirose-bot-dev" \
   --privileged \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v $(which docker):/bin/docker \
-  -v $(pwd):/iirosebot \
+  -v $(pwd):$(pwd) \
+  -v $(pwd)/storge/public:$(pwd)/public/storge \
   -p $host:$port:8008 \
-  -w /iirosebot \
+  -w $(pwd) \
   --rm=true hserr/iirose-bot

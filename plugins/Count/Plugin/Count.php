@@ -47,6 +47,7 @@ class Count extends PhpPlugin
             $pluginCount->last=Date::today();
         }
         if(!Date::today()->isSamedAY($pluginCount->last)){
+            $pluginCount->last=Date::today();
             $pluginCount->count=0;
         }
         $pluginCount->count++;
