@@ -23,7 +23,6 @@ class AuthController extends \Controller\Controllers\Controller
             $content=$response->getBody()->getContents();
             if(strlen($content)==13){
                 $uid=$content;
-                var_dump($uid);
                 /** @var Bot $bot */
                 $bot= Bot::where('uid','=',$uid)->first();
                 if(!$bot){

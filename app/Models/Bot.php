@@ -10,8 +10,8 @@ use Bot\Console\InputUtils;
 use Bot\Event\ChatEvent;
 use Bot\Event\PersonChatEvent;
 use Bot\Exception\NetworkException;
-use Bot\Extensions\AsyncInfoExtension;
 use Bot\Extensions\CodeExtension;
+use Bot\Extensions\SyncInfoExtension;
 use Bot\Handle;
 use Bot\Handler;
 use Bot\Listenerable;
@@ -76,7 +76,7 @@ class Bot extends Model implements Listenerable
     }
 
     use AutoListener;
-    use AsyncInfoExtension;
+    use SyncInfoExtension;
     use CodeExtension;
 
     /** @var Bot $instance */
