@@ -3,7 +3,6 @@
 
 namespace Plugin\RSS;
 
-
 use FeedException;
 
 class FeedParse extends \Feed
@@ -18,6 +17,5 @@ class FeedParse extends \Feed
      */
     protected static function httpRequest($url, $user, $pass)
     {
-
     }
 }

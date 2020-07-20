@@ -3,12 +3,10 @@
 
 namespace Bot\Packets;
 
-
 use Models\Bot;
 
 class AdminForbiddenClean implements \Bot\Packet
 {
-
     public $user_id;
 
 

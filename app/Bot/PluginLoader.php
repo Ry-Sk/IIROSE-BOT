@@ -3,7 +3,6 @@
 
 namespace Bot;
 
-
 use Models\Bot;
 
 class PluginLoader implements Listenerable
@@ -13,21 +12,24 @@ class PluginLoader implements Listenerable
     protected $configure;
     protected $slug;
     protected $load=false;
-    public function __construct($bot, $configure,$slug)
+    public function __construct($bot, $configure, $slug)
     {
         $this->bot=$bot;
-        $this->configure=json_decode($configure,true);
+        $this->configure=json_decode($configure, true);
         $this->slug=$slug;
     }
-    public function load(){
+    public function load()
+    {
         $this->load=true;
     }
-    public function unload(){
+    public function unload()
+    {
         $this->load=false;
     }
-    public function reload($configure){
+    public function reload($configure)
+    {
         $this->unload();
-        $this->configure=json_decode($configure,true);
+        $this->configure=json_decode($configure, true);
         $this->load();
     }
 

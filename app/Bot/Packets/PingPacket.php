@@ -3,7 +3,6 @@
 
 namespace Bot\Packets;
 
-
 use Bot\Packet;
 
 class PingPacket implements Packet

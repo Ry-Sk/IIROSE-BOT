@@ -6,4 +6,5 @@
         [],
         'app/MiddleWares'=>'\\MiddleWares',
         'AdminPHP/MiddleWares'=>'\\MiddleWares',
-    ]);
+    ]
+);

@@ -3,7 +3,6 @@
 
 namespace Bot;
 
-
 use Bot\Console\InputUtils;
 use Bot\Event\CommandEvent;
 use Bot\Handler\CommandHandler;
@@ -30,16 +29,16 @@ class Command extends \Symfony\Component\Console\Command\Command
     {
         $this->setDescription($this->config->description)
             ->setAliases($this->config->aliases);
-        foreach ($this->config->arguments as $argument){
+        foreach ($this->config->arguments as $argument) {
             $mode=$argument->require ? InputArgument::REQUIRED : InputArgument::OPTIONAL;
             $mode=$argument->array ? $mode|InputArgument::IS_ARRAY : $mode;
-            $this->addArgument($argument->name,$mode,$argument->describle,$argument->default);
+            $this->addArgument($argument->name, $mode, $argument->describle, $argument->default);
         }
-        foreach ($this->config->options as $option){
+        foreach ($this->config->options as $option) {
             $mode=$option->require ? InputOption::VALUE_REQUIRED : InputOption::VALUE_OPTIONAL;
             $mode=$option->array ? $mode|InputOption::VALUE_IS_ARRAY : $mode;
             $mode=$option->none ? $mode|InputOption::VALUE_NONE : $mode;
-            $this->addOption($option->name,$option->shortcuts,$mode,$option->describle,$option->default);
+            $this->addOption($option->name, $option->shortcuts, $mode, $option->describle, $option->default);
         }
         foreach ($this->config->usages as $usage) {
             $this->addUsage($usage);
@@ -48,7 +47,7 @@ class Command extends \Symfony\Component\Console\Command\Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if(!$input instanceof InputUtils){
+        if (!$input instanceof InputUtils) {
             return 0;
         }
         Bot::$instance

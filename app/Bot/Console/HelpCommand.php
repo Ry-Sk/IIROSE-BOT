@@ -39,7 +39,8 @@ class HelpCommand extends \Symfony\Component\Console\Command\HelpCommand
                 new InputArgument('command_name', InputArgument::OPTIONAL, 'The command name', 'help'),
             ])
             ->setDescription('Displays help for a command')
-            ->setHelp(<<<'EOF'
+            ->setHelp(
+                <<<'EOF'
 The <info>help</info> command displays help for a given command:
 
   <info>/list</info>

@@ -6,4 +6,5 @@
         'driver'    => 'sqlite',
         'database'  => \File\Path::storge_path('database.db'),
         'prefix'    => '',
-    ]);
+    ]
+);

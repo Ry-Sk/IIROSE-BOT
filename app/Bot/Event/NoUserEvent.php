@@ -5,5 +5,4 @@ namespace Bot\Event;
 
 class NoUserEvent
 {
-
 }

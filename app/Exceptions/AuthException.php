@@ -3,5 +3,4 @@ namespace Exceptions;
 
 class AuthException extends \Exception
 {
-
 }

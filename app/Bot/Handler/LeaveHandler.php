@@ -7,7 +7,6 @@ use Models\Bot;
 
 class LeaveHandler implements Handler
 {
-
     public function isPacket($message, $firstChar, $count, $explode)
     {
         if ($count == 12 && $explode[3]=='\'3') {
@@ -17,7 +16,7 @@ class LeaveHandler implements Handler
 
     public function pharse($message)
     {
-        $a = Bot::decode(explode('>',$message));
+        $a = Bot::decode(explode('>', $message));
         return new LeaveEvent(
             $a[5],
             $a[8],

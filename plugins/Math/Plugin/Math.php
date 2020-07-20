@@ -15,11 +15,11 @@ class Math extends PhpPlugin
 {
     public function onCommand(CommandEvent $event)
     {
-        if($event->sign=='math:maxima') {
+        if ($event->sign=='math:maxima') {
             go(function () use ($event) {
                 try {
                     $message = implode(' ', $event->input->getArgument('shell'));
-                    exec('bash -c "'.addslashes('docker run --rm=true --name "iirose_maxima_'.addslashes($event->sender->getUserId()).'" -m 100M --cpus=0.1 jgoldfar/maxima-docker:debian-latest timeout 5 maxima --batch-string="'.addslashes($message).'"').'" 2>&1',$lines);
+                    exec('bash -c "'.addslashes('docker run --rm=true --name "iirose_maxima_'.addslashes($event->sender->getUserId()).'" -m 100M --cpus=0.1 jgoldfar/maxima-docker:debian-latest timeout 5 maxima --batch-string="'.addslashes($message).'"').'" 2>&1', $lines);
                     $op=false;
                     $return='';
                     foreach ($lines as $line) {

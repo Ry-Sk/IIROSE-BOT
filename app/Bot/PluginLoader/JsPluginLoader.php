@@ -26,14 +26,15 @@ class JsPluginLoader extends PluginLoader implements Listenerable
         $this->basePath=Path::formt_dir(ROOT.'/plugins/'.$this->slug);
         $this->receiveQueue=new SplQueue();
     }
-    public function addListener($event,$listener){
+    public function addListener($event, $listener)
+    {
         $className=$event;
-        if(substr($className,0,10)=='Bot\\Event\\'){
-            $slug=substr($className,10,strlen($className)-15);
+        if (substr($className, 0, 10)=='Bot\\Event\\') {
+            $slug=substr($className, 10, strlen($className)-15);
             $className='Bot\\Handler\\'.$slug.'Handler';
             Bot::$instance->getHandler($className)->addListener(
-                new Listener($this,function($event)use($listener){
-                    $this->receiveQueue->push(function ()use($event,$listener){
+                new Listener($this, function ($event) use ($listener) {
+                    $this->receiveQueue->push(function () use ($event,$listener) {
                         $listener($event);
                     });
                 })
@@ -68,7 +69,7 @@ class JsPluginLoader extends PluginLoader implements Listenerable
                 $call();
             }
             \Co::sleep(0.1);
-        }catch (\Throwable $e){
+        } catch (\Throwable $e) {
             ErrorFormat::dump($e);
         }
     }

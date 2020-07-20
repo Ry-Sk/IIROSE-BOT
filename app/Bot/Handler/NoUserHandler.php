@@ -9,7 +9,6 @@ use Bot\Handler;
 
 class NoUserHandler implements Handler
 {
-
     public function isPacket($message, $firstChar, $count, $explode)
     {
         if ($message == '+') {

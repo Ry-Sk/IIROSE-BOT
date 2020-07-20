@@ -24,7 +24,7 @@ class Feed
     }
     public function __get($name)
     {
-        if($name=='item'){
+        if ($name=='item') {
             return $this->feed->item;
         }
         return (string)$this->feed->$name;

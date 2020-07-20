@@ -3,7 +3,6 @@
 
 namespace Bot;
 
-
 class Process
 {
     private $name;
@@ -18,14 +17,14 @@ class Process
         proc_terminate($this->pool);
     }
 
-    public function __construct($command,$name)
+    public function __construct($command, $name)
     {
         $descriptorspec = array(
             0 => array("pipe", "r"),
             1 => array("pipe", "w"),
             2 => array("pipe", "w"),
         );
-        $this->pool = proc_open($command,$descriptorspec,$pipes);
+        $this->pool = proc_open($command, $descriptorspec, $pipes);
         $this->stdin=$pipes[0];
         $this->stdout=$pipes[1];
         $this->stderr=$pipes[2];
@@ -35,62 +34,63 @@ class Process
 
     public function check()
     {
-        if(!$this->pool){
+        if (!$this->pool) {
             return false;
         }
         $status=proc_get_status($this->pool);
-        if(!$status){
+        if (!$status) {
             return false;
         }
-        if(!@$status['running']){
+        if (!@$status['running']) {
             return false;
         }
         return true;
     }
-    public function std(){
-        go(function (){
-            while (true){
+    public function std()
+    {
+        go(function () {
+            while (true) {
                 try {
-                    $message=@\Co::fread($this->stdout,4096);
-                    if($message){
-                        $messages=explode("\n",$message);
-                        foreach ($messages as $k=>$v){
-                            if(!$v){
+                    $message=@\Co::fread($this->stdout, 4096);
+                    if ($message) {
+                        $messages=explode("\n", $message);
+                        foreach ($messages as $k=>$v) {
+                            if (!$v) {
                                 unset($messages[$k]);
                             }
                         }
-                        $message=$this->name.implode("\n".$this->name,$messages)."\n";
+                        $message=$this->name.implode("\n".$this->name, $messages)."\n";
                         echo $message;
-                    }else{
+                    } else {
                         throw new \Exception();
                     }
                     \Co::sleep(0.1);
-                }catch (\Throwable $e){
-                    if(!$this->check()){
+                } catch (\Throwable $e) {
+                    if (!$this->check()) {
                         return;
                     }
                 }
             }
         });
-        go(function (){
-            while (true){
+        go(function () {
+            while (true) {
                 try {
-                    $message=@\Co::fread($this->stderr,4096);
-                    if($message){
-                        $messages=explode("\n",$message);
-                        foreach ($messages as $k=>$v){
-                            if(!$v){
+                    $message=@\Co::fread($this->stderr, 4096);
+                    if ($message) {
+                        $messages=explode("\n", $message);
+                        foreach ($messages as $k=>$v) {
+                            if (!$v) {
                                 unset($messages[$k]);
                             }
                         }
-                        $message=$this->name.implode("\n".$this->name,$messages)."\n";
+                        $message=$this->name.implode("\n".$this->name, $messages)."\n";
                         echo $message;
-                    }else{
+                    } else {
                         throw new \Exception();
                     }
                     \Co::sleep(0.1);
-                }catch (\Throwable $e){
-                    if(!$this->check()){
+                } catch (\Throwable $e) {
+                    if (!$this->check()) {
                         return;
                     }
                 }

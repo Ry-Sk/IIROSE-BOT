@@ -3,5 +3,4 @@ namespace Controller\Controllers;
 
 class Controller
 {
-
 }

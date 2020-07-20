@@ -20,12 +20,13 @@ class Route
     {
         self::$instance=$this;
         $this->routes = new RouteCollection();
-        foreach (File::scan_dir_files(ROOT.'/routes') as $file){
+        foreach (File::scan_dir_files(ROOT.'/routes') as $file) {
             require_once $file;
         }
     }
-    public static function add($name,$path,$controller,$method,$methods=['GET'],$type=self::html,$host=''){
-        self::$instance->routes->add($name,(new \Symfony\Component\Routing\Route(
+    public static function add($name, $path, $controller, $method, $methods=['GET'], $type=self::html, $host='')
+    {
+        self::$instance->routes->add($name, (new \Symfony\Component\Routing\Route(
             $path,
             ['_controller'=>$controller,
                 '_method'=>$method,
@@ -45,7 +46,8 @@ class Route
      * @return array
      * @throws ResourceNotFoundException
      */
-    public static function match($context){
+    public static function match($context)
+    {
         $matcher = new UrlMatcher(self::$instance->routes, $context);
         $parameters = $matcher->match($context->getPathInfo());
         return $parameters;

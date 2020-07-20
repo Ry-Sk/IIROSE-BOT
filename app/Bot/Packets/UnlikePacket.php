@@ -3,7 +3,6 @@
 
 namespace Bot\Packets;
 
-
 use Models\Bot;
 
 class UnlikePacket implements \Bot\Packet
@@ -11,7 +10,7 @@ class UnlikePacket implements \Bot\Packet
     public $user_id;
     public $message;
 
-    public function __construct($user_id,$message)
+    public function __construct($user_id, $message)
     {
         $this->user_id = $user_id;
         $this->message = $message;

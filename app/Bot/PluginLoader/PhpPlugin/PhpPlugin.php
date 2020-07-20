@@ -12,13 +12,13 @@ class PhpPlugin
     protected $bot;
     protected $config;
     protected $pluginLoader;
-    public function __construct($bot,$config,$pluginLoader)
+    public function __construct($bot, $config, $pluginLoader)
     {
         $this->bot = $bot;
         $this->config = $config;
         $this->pluginLoader = $pluginLoader;
     }
-    public function tick(){
-
+    public function tick()
+    {
     }
 }

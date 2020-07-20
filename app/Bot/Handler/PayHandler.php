@@ -22,8 +22,8 @@ class PayHandler implements Handler
 
     public function pharse($message)
     {
-        $a = Bot::decode(explode('>',$message));
-        $ma=explode(' ',$a[3]);
+        $a = Bot::decode(explode('>', $message));
+        $ma=explode(' ', $a[3]);
         return new PayEvent(
             $a[6],
             substr($a[0], 2),

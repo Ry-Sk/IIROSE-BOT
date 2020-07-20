@@ -3,7 +3,6 @@
 
 namespace Bot\Extensions;
 
-
 trait CodeExtension
 {
     public static function decode($data)
@@ -34,7 +33,7 @@ trait CodeExtension
         $strlen = mb_strlen($data);
         while ($strlen) {
             $char=mb_substr($data, 0, 1);
-            $o .= @$table[$char] ?: html_entity_decode($char,ENT_QUOTES);
+            $o .= @$table[$char] ?: html_entity_decode($char, ENT_QUOTES);
             $data = mb_substr($data, 1, $strlen);
             $strlen = mb_strlen($data);
         }

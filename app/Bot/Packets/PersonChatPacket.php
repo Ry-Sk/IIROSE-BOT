@@ -3,14 +3,13 @@
 
 namespace Bot\Packets;
 
-
 class PersonChatPacket implements \Bot\Packet
 {
     public $message;
     public $color;
     public $user_id;
 
-    public function __construct($user_id,$message,$color='6ebadb')
+    public function __construct($user_id, $message, $color='6ebadb')
     {
         $this->user_id = $user_id;
         $this->message = $message;

@@ -3,7 +3,6 @@
 
 namespace Bot\Packets;
 
-
 class BoardCastPacket implements \Bot\Packet
 {
     public $message;
@@ -11,7 +10,6 @@ class BoardCastPacket implements \Bot\Packet
 
     public function __construct($message, $color = '6ebadb')
     {
-
         $this->message = $message;
         $this->color = $color;
     }
@@ -29,6 +27,7 @@ class BoardCastPacket implements \Bot\Packet
             [
                 't' => $this->message,
                 'c' => $this->color
-            ]);
+            ]
+        );
     }
 }

@@ -3,7 +3,6 @@
 
 namespace Commands;
 
-
 use Bot\Process;
 use Console\Commands\Command;
 use DB\DataBase;
@@ -26,17 +25,17 @@ class BotCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         \Co::set(['hook_flags' => SWOOLE_HOOK_ALL | SWOOLE_HOOK_CURL]);
-        \Co\run(function (){
+        \Co\run(function () {
             new DataBase();
-            go(function (){
+            go(function () {
                 /** @var Process[] $procs */
                 $procs=[];
-                while (true){
+                while (true) {
 
                     //echo 'checkA';
                     // A.将数据库转换为BOT LIST
                     /** @var Bot[] $all_bots */
-                    $all_bots = Bot::where('enable','=',1)->get();
+                    $all_bots = Bot::where('enable', '=', 1)->get();
                     /** @var Bot[] $bot_list */
                     $bot_list = [];
                     foreach ($all_bots as $per_bot) {
@@ -59,7 +58,7 @@ class BotCommand extends Command
                     //echo 'checkC';
                     // C.销毁死亡的机器人
                     foreach ($procs as $name => $proc) {
-                        if(!$proc->check()){
+                        if (!$proc->check()) {
                             unset($procs[$name]);
                         }
                     }
@@ -67,8 +66,8 @@ class BotCommand extends Command
                     //echo 'checkD';
                     // D.加载机器人
                     foreach ($bot_list as $name=>$per_bot) {
-                        if(!@$procs[$name]){
-                            $procs[$name]=new Process('php '.ROOT.'/iirosebot bot:one '.$per_bot->id,'['.$per_bot->username.']:');
+                        if (!@$procs[$name]) {
+                            $procs[$name]=new Process('php '.ROOT.'/iirosebot bot:one '.$per_bot->id, '['.$per_bot->username.']:');
                         }
                     }
                     //echo 'checkE';

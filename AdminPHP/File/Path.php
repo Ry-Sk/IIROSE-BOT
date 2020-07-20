@@ -3,7 +3,6 @@
 
 namespace File;
 
-
 use Phar;
 
 class Path
@@ -20,105 +19,117 @@ class Path
         unlink($this->temp_path);
     }
 
-    public static function temp_path($file=''){
-        if(!self::$instance){
+    public static function temp_path($file='')
+    {
+        if (!self::$instance) {
             new Path();
         }
         $dir=self::formt_dir(self::$instance->temp_path);
         var_dump(dirname($dir.$file));
-        if(!is_dir(dirname($dir.$file))){
-            mkdir(dirname($dir.$file),0777,true);
+        if (!is_dir(dirname($dir.$file))) {
+            mkdir(dirname($dir.$file), 0777, true);
         }
         return self::formt_file($dir.$file);
     }
-    public static function storge_path($file=''){
+    public static function storge_path($file='')
+    {
         $dir=self::formt_dir(self::get_absolute_path(
             dirname(Phar::running(false))?
                 dirname(Phar::running(false)).'/storge/':
-                ROOT.'/storge/'));
-        if(!is_dir($dir)){
-            mkdir($dir,0777,true);
+                ROOT.'/storge/'
+        ));
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
         }
-        if(!is_dir(dirname($dir.$file))){
-            mkdir(dirname($dir.$file),0777,true);
+        if (!is_dir(dirname($dir.$file))) {
+            mkdir(dirname($dir.$file), 0777, true);
         }
         return self::formt_file($dir.$file);
     }
-    public static function public($file=''){
-        if(!$file){
+    public static function public($file='')
+    {
+        if (!$file) {
             return self::formt_dir(ROOT.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR);
-        }else{
+        } else {
             $file=self::formt_file($file);
             return self::formt_file(ROOT.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.$file);
         }
     }
-    public static function app($file=''){
-        if(!$file){
+    public static function app($file='')
+    {
+        if (!$file) {
             return self::formt_dir(ROOT.DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR);
-        }else{
+        } else {
             $file=self::formt_file($file);
             return self::formt_file(ROOT.DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.$file);
         }
     }
-    public static function get_absolute_path($path) {
+    public static function get_absolute_path($path)
+    {
         $front='';
-        if(substr($path,0,7)=='phar://'){
-            $path=substr($path,7);
+        if (substr($path, 0, 7)=='phar://') {
+            $path=substr($path, 7);
             $front='phar://';
         }
-        if(DIRECTORY_SEPARATOR=='\\'){
-            $path=str_ireplace('/','\\',$path);
+        if (DIRECTORY_SEPARATOR=='\\') {
+            $path=str_ireplace('/', '\\', $path);
         }
         $parts = array_filter(explode(DIRECTORY_SEPARATOR, $path), 'strlen');
         $absolutes = array();
         foreach ($parts as $part) {
-            if ('.' == $part) continue;
+            if ('.' == $part) {
+                continue;
+            }
             if ('..' == $part) {
                 array_pop($absolutes);
             } else {
                 $absolutes[] = $part;
             }
         }
-        return $front.(substr($path,0,1)==DIRECTORY_SEPARATOR?DIRECTORY_SEPARATOR:'').implode(DIRECTORY_SEPARATOR, $absolutes);
+        return $front.(substr($path, 0, 1)==DIRECTORY_SEPARATOR?DIRECTORY_SEPARATOR:'').implode(DIRECTORY_SEPARATOR, $absolutes);
     }
-    public static function formt_dir($dir){
+    public static function formt_dir($dir)
+    {
         $dir=self::get_absolute_path($dir);
-        if(DIRECTORY_SEPARATOR=='\\'){
-            $dir=str_ireplace('/','\\',$dir);
-            if(substr($dir,strlen($dir)-1)=='\\'){
+        if (DIRECTORY_SEPARATOR=='\\') {
+            $dir=str_ireplace('/', '\\', $dir);
+            if (substr($dir, strlen($dir)-1)=='\\') {
                 return $dir;
-            }else{
+            } else {
                 return $dir.'\\';
             }
-        }else{
-            if(substr($dir,strlen($dir)-1)=='/'){
+        } else {
+            if (substr($dir, strlen($dir)-1)=='/') {
                 return $dir;
-            }else{
+            } else {
                 return $dir.'/';
             }
         }
     }
-    public static function formt_file($file){
+    public static function formt_file($file)
+    {
         $file=self::get_absolute_path($file);
-        if(DIRECTORY_SEPARATOR=='\\'){
-            $file=str_ireplace('/','\\',$file);
-            if(substr($file,strlen($file)-1)=='\\'){
-                return substr($file,0,strlen($file)-1);
-            }else{
+        if (DIRECTORY_SEPARATOR=='\\') {
+            $file=str_ireplace('/', '\\', $file);
+            if (substr($file, strlen($file)-1)=='\\') {
+                return substr($file, 0, strlen($file)-1);
+            } else {
                 return $file;
             }
-        }else{
-            if(substr($file,strlen($file)-1)=='/'){
-                return substr($file,0,strlen($file)-1);
-            }else{
+        } else {
+            if (substr($file, strlen($file)-1)=='/') {
+                return substr($file, 0, strlen($file)-1);
+            } else {
                 return $file;
             }
         }
     }
-    public static function get_extension($file){
+    public static function get_extension($file)
+    {
         return substr(strrchr($file, '.'), 1);
     }
-    public static function get_mine($extension){
+    public static function get_mine($extension)
+    {
         $mimes = array(
             'phps' => 1,
             'c' => 'text/plain',

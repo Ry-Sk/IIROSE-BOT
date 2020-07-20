@@ -3,8 +3,8 @@
 
 namespace Bot\Packets;
 
-
 use Bot\Packet;
+
 class SourcePacket implements Packet
 {
     public $message;

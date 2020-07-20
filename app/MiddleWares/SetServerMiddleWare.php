@@ -1,7 +1,6 @@
 <?php
 namespace MiddleWares;
 
-
 use Closure;
 use Http\Request;
 use Http\Response;
@@ -13,7 +12,7 @@ class SetServerMiddleWare implements MiddleWare
     {
         /** @var Response $response */
         $response = $next($request);
-        $response->headers->set('Server','IIROSE-BOT-SERVER');
+        $response->headers->set('Server', 'IIROSE-BOT-SERVER');
         return $response;
     }
 }

@@ -3,7 +3,6 @@
 
 namespace Bot\Packets;
 
-
 use Models\Bot;
 
 class AdminForbiddenBanPacket implements \Bot\Packet
@@ -18,7 +17,7 @@ class AdminForbiddenBanPacket implements \Bot\Packet
     public $play;
 
 
-    public function __construct($user_name,$time,$describe,$chat,$play)
+    public function __construct($user_name, $time, $describe, $chat, $play)
     {
         $this->user_name = $user_name;
         $this->time = $time;

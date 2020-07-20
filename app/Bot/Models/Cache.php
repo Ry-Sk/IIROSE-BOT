@@ -3,7 +3,6 @@
 
 namespace Bot\Models;
 
-
 class Cache
 {
     public $time;
@@ -14,7 +13,8 @@ class Cache
         $this->time=time();
     }
 
-    public function isExpire($timeout=120){
+    public function isExpire($timeout=120)
+    {
         return $this->time < time()-$timeout;
     }
 }

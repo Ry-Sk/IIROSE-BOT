@@ -3,7 +3,6 @@
 
 namespace Bot\Packets;
 
-
 use Models\Bot;
 
 class LikePacket implements \Bot\Packet
@@ -11,7 +10,7 @@ class LikePacket implements \Bot\Packet
     public $user_id;
     public $message;
 
-    public function __construct($user_id,$message)
+    public function __construct($user_id, $message)
     {
         $this->user_id = $user_id;
         $this->message = $message;

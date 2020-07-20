@@ -7,7 +7,6 @@ use Models\Bot;
 
 class PersonChatHandler implements Handler
 {
-
     public function isPacket($message, $firstChar, $count, $explode)
     {
         if ($count == 10) {
@@ -17,7 +16,7 @@ class PersonChatHandler implements Handler
 
     public function pharse($message)
     {
-        $a = Bot::decode(explode('>',$message));
+        $a = Bot::decode(explode('>', $message));
         return new PersonChatEvent(
             $a[3],
             $a[4],

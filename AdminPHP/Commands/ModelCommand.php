@@ -1,6 +1,7 @@
 <?php
 
 namespace Commands;
+
 use Console\Commands\Command;
 use DB\DataBase;
 use File\File;
@@ -19,7 +20,7 @@ class ModelCommand extends Command
     protected static $defaultName = 'model';
     protected function configure()
     {
-        $this->addArgument('model',InputArgument::REQUIRED);
+        $this->addArgument('model', InputArgument::REQUIRED);
         $this->setProcessTitle('AdminPHP model');
         $this->setDescription('make model from mysql.');
         $this->setHelp('Nerver remove @adminphp');
@@ -31,16 +32,17 @@ class ModelCommand extends Command
         new DataBase();
         $file=Path::app(
             'Models/'.
-            strtoupper(substr($name,0,1)).
-            substr($name,1).
-            '.php');
-        $class=strtoupper(substr($name,0,1)).
-            substr($name,1);
-        if(file_exists($file)){
+            strtoupper(substr($name, 0, 1)).
+            substr($name, 1).
+            '.php'
+        );
+        $class=strtoupper(substr($name, 0, 1)).
+            substr($name, 1);
+        if (file_exists($file)) {
             $content=file_get_contents($file);
-            $before=substr($content,0,strpos($content,"\n".' * @adminphp start'."\n"))."\n".' * @adminphp start';
-            $after=substr($content,strpos($content,"\n".' * @adminphp end'."\n"));
-        }else{
+            $before=substr($content, 0, strpos($content, "\n".' * @adminphp start'."\n"))."\n".' * @adminphp start';
+            $after=substr($content, strpos($content, "\n".' * @adminphp end'."\n"));
+        } else {
             $before='<?php
 namespace Models;
 
@@ -62,14 +64,14 @@ class '.$class.' extends Model
         foreach ($columns as $column) {
             $o .= "\n" . ' * @property $' . $column;
         }
-        if(in_array('id',$columns)){
+        if (in_array('id', $columns)) {
             $o.='
  * @method static '.$class.' find(int $id)
  * @method static '.$class.' findOrFail(int $id)';
         }
         $o.="\n".' * @method static \\Illuminate\\Database\\Query\\Builder where(\\Closure|string|array $column, mixed $operator = null, mixed $value = null, string $boolean = \'and\')';
         $o.=$after;
-        file_put_contents($file,$o);
+        file_put_contents($file, $o);
         return 0;
     }
 }

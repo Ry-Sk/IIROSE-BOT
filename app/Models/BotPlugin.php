@@ -29,11 +29,12 @@ class BotPlugin extends Model
      * @param $bot
      * @return BotPlugin[]
      */
-    public static function findByBot($bot){
-        if($bot instanceof Bot){
-            $botPlugins = BotPlugin::where('bot_id','=',$bot->id)->get();
-        }else{
-            $botPlugins =  BotPlugin::where('bot_id','=',$bot)->get();
+    public static function findByBot($bot)
+    {
+        if ($bot instanceof Bot) {
+            $botPlugins = BotPlugin::where('bot_id', '=', $bot->id)->get();
+        } else {
+            $botPlugins =  BotPlugin::where('bot_id', '=', $bot)->get();
         }
         /** @var BotPlugin[] $botPlugins */
         return $botPlugins;
@@ -44,37 +45,38 @@ class BotPlugin extends Model
     /** @var Plugin $plugin */
     protected $plugin;
     protected $isload;
-    public function loading($bot){
-        if($this->isload){
+    public function loading($bot)
+    {
+        if ($this->isload) {
             return;
         }
         Logger::info('加载插件'.$this->id.':'.$this->slug);
         $this->isload=true;
         $this->bot=$bot;
         $this->plugin=Plugin::find($this->slug);
-        $this->plugin->load($bot,$this->configure);
+        $this->plugin->load($bot, $this->configure);
     }
     public function check()
     {
-        try{
+        try {
             $config=$this->configure;
             $this->refresh();
-            if($config!=$this->configure){
+            if ($config!=$this->configure) {
                 Logger::info('重载插件'.$this->id.':'.$this->slug);
                 $this->plugin->reload($this->configure);
             }
-        }catch (ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             Logger::info('卸载插件'.$this->id.':'.$this->slug);
             $this->plugin->unload();
             $this->isload=false;
             return;
-        }catch (\Throwable $e){
+        } catch (\Throwable $e) {
             ErrorFormat::dump($e);
         }
     }
     public function tick()
     {
-        if($this->plugin) {
+        if ($this->plugin) {
             $this->plugin->tick();
         }
     }

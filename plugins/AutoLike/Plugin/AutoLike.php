@@ -26,6 +26,6 @@ class AutoLike extends PhpPlugin
     public function onUnlike(UnlikeEvent $event)
     {
         $user_id=$this->bot->getUserId($event->user_name);
-        $this->bot->packet(new UnlikePacket($user_id,'就是这样'));
+        $this->bot->packet(new UnlikePacket($user_id, '就是这样'));
     }
 }

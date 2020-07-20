@@ -3,14 +3,13 @@
 
 namespace Bot\Packets;
 
-
 class PayPacket implements \Bot\Packet
 {
     public $message;
     public $count;
     public $user_id;
 
-    public function __construct($user_id,$count,$message=null)
+    public function __construct($user_id, $count, $message=null)
     {
         $this->user_id = $user_id;
         $this->message=$message;

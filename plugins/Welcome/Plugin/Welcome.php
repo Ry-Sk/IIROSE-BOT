@@ -16,6 +16,6 @@ class Welcome extends PhpPlugin
 {
     public function onJoin(JoinEvent $event)
     {
-        $this->bot->packet(new ChatPacket(' [*'.$event->user_name.'*] 欢迎回家～',$event->color));
+        $this->bot->packet(new ChatPacket(' [*'.$event->user_name.'*] 欢迎回家～', $event->color));
     }
 }

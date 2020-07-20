@@ -3,7 +3,6 @@
 
 namespace Commands;
 
-
 use Bot\Process;
 use Console\Commands\Command;
 use DB\DataBase;
@@ -26,14 +25,14 @@ class RunCommand extends Command
     }
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        \Co\run(function (){
-            if(!isset($web) || !$web->check()) {
+        \Co\run(function () {
+            if (!isset($web) || !$web->check()) {
                 echo '---:启动web'."\n";
                 $web = new Process('php '.ROOT.'/iirosebot server:swoole', 'web:');
             }
-            if(!isset($bot) || !$bot->check()) {
+            if (!isset($bot) || !$bot->check()) {
                 echo '---:启动bot'."\n";
-                $bot = new Process('php '.ROOT.'/iirosebot bot','bot:');
+                $bot = new Process('php '.ROOT.'/iirosebot bot', 'bot:');
             }
             \Co::sleep(1);
         });

@@ -8,7 +8,6 @@ use Models\Bot;
 
 class UserInfoHandler implements Handler
 {
-
     public function isPacket($message, $firstChar, $count, $explode)
     {
         if ($count == 12 && $explode[5] == 'n') {
@@ -18,7 +17,7 @@ class UserInfoHandler implements Handler
 
     public function pharse($message)
     {
-        $a = Bot::decode(explode('>',$message));
+        $a = Bot::decode(explode('>', $message));
         return new UserInfoEvent(
             $a[8],
             $a[2],

@@ -3,7 +3,6 @@
 
 namespace Vaildator;
 
-
 use Illuminate\Validation\Factory;
 use Illuminate\Translation\FileLoader;
 use Illuminate\Translation\Translator;

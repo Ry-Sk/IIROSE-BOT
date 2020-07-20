@@ -3,3 +3,4 @@ vendor
 composer.lock
 .composer
 .bash_history
+.php_cs.cache

@@ -1,6 +1,7 @@
 <?php
 
 namespace Commands;
+
 use Console\Commands\Command;
 use File\File;
 use Phar;
@@ -29,28 +30,29 @@ class CompileCommand extends Command
         $this->add_files(ROOT);
         $this->phar->setStub($this->getStub());
         $this->phar->compressFiles(Phar::GZ);
-        File::chmod($this->phar->getPath(),'-rwxrwxr-x');
+        File::chmod($this->phar->getPath(), '-rwxrwxr-x');
 
         $output->writeln('好耶～编译成功啦');
         $output->writeln('The compilation is successful');
         $output->writeln($this->phar->getPath());
         return 0;
     }
-    private function add_files($dir){
+    private function add_files($dir)
+    {
         echo $dir."\n";
-        if(file_exists($dir.'/.compile.json')){
+        if (file_exists($dir.'/.compile.json')) {
             $config=json_decode(file_get_contents($dir.'/.compile.json'));
         }
         $files=scandir($dir);
         foreach ($files as $file) {
-            if(($file == '.' || $file == '..' || $file == '.compile.json')
-                ||(isset($config) && isset($config->ignore) && in_array($file,$config->ignore))){
+            if (($file == '.' || $file == '..' || $file == '.compile.json')
+                ||(isset($config) && isset($config->ignore) && in_array($file, $config->ignore))) {
                 continue;
             }
-            if(is_file($dir.'/'.$file)){
-                $this->phar->addFile($dir.'/'.$file,substr($dir.'/'.$file,strlen(ROOT)));
-            }elseif(is_dir($dir.'/'.$file)){
-                $this->phar->addEmptyDir(substr($dir.'/'.$file,strlen(ROOT)));
+            if (is_file($dir.'/'.$file)) {
+                $this->phar->addFile($dir.'/'.$file, substr($dir.'/'.$file, strlen(ROOT)));
+            } elseif (is_dir($dir.'/'.$file)) {
+                $this->phar->addEmptyDir(substr($dir.'/'.$file, strlen(ROOT)));
                 $this->add_files($dir.'/'.$file);
             }
         }

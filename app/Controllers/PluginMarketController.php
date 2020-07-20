@@ -1,5 +1,6 @@
 <?php
 namespace Controllers;
+
 use Bot\Models\Plugin;
 use Controller\Controllers\Controller;
 use Exceptions\NoAccessException;
@@ -13,13 +14,14 @@ use Models\BotPlugin;
 
 class PluginMarketController extends Controller
 {
-    public function list(Request $request){
+    public function list(Request $request)
+    {
         $bot=Bot::authOrFail($request->getOrFail('token'));
-        $plugins=File::scan_dir_dirs(ROOT.'/plugins',false);
+        $plugins=File::scan_dir_dirs(ROOT.'/plugins', false);
         $o=[];
-        foreach ($plugins as $plugin){
-            $info=json_decode(file_get_contents(Path::formt_file(ROOT.'/plugins/'.$plugin.'/plugin.json')),true);
-            $info['slug']=substr($plugin,0,strlen($plugin)-1);
+        foreach ($plugins as $plugin) {
+            $info=json_decode(file_get_contents(Path::formt_file(ROOT.'/plugins/'.$plugin.'/plugin.json')), true);
+            $info['slug']=substr($plugin, 0, strlen($plugin)-1);
             $o[]=$info;
         }
         return new JsonResponse([

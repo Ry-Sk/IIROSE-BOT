@@ -1,6 +1,7 @@
 <?php
 
 namespace Commands;
+
 use Console\Commands\Command;
 use Console\ErrorFormat;
 use File\File;
@@ -21,8 +22,8 @@ class TestCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        try{
-            foreach (File::scan_dir_deep_files(ROOT.'/test/') as $file){
+        try {
+            foreach (File::scan_dir_deep_files(ROOT.'/test/') as $file) {
                 $output->writeln($file);
                 ob_start();
                 $result=include $file;
@@ -35,11 +36,11 @@ class TestCommand extends Command
                 ob_end_clean();
 
                 $output->writeln('    result:');
-                $output->writeln('        '.implode("\n".'        ',explode("\n",$result)));
+                $output->writeln('        '.implode("\n".'        ', explode("\n", $result)));
                 $output->writeln('    stdout:');
-                $output->writeln('        '.implode("\n".'        ',explode("\n",$stdout)));
+                $output->writeln('        '.implode("\n".'        ', explode("\n", $stdout)));
             }
-        }catch (\Throwable $e){
+        } catch (\Throwable $e) {
             ErrorFormat::dump($e);
         }
         return 0;

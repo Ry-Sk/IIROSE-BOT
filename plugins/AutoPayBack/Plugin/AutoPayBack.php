@@ -22,6 +22,6 @@ class AutoPayBack extends PhpPlugin
 {
     public function onPay(PayEvent $event)
     {
-        $this->bot->packet(new PayPacket($this->bot->getUserId($event->user_name),$event->count));
+        $this->bot->packet(new PayPacket($this->bot->getUserId($event->user_name), $event->count));
     }
 }

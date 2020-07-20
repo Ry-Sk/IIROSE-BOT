@@ -8,7 +8,6 @@ use Models\Bot;
 
 class BoardCastHandler implements Handler
 {
-
     public function isPacket($message, $firstChar, $count, $explode)
     {
         if ($firstChar == '=' && $count == 6) {
@@ -18,7 +17,7 @@ class BoardCastHandler implements Handler
 
     public function pharse($message)
     {
-        $a = Bot::decode(explode('>',$message));
+        $a = Bot::decode(explode('>', $message));
         return new BoardCastEvent(
             $a[1],
             $a[2],

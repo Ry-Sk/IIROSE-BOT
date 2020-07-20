@@ -13,7 +13,8 @@ use View\View;
 
 class Keneral
 {
-    public function init(){
+    public function init()
+    {
         new Route();
         new MiddleWare();
         new View();
@@ -40,7 +41,8 @@ class Keneral
                     $request->getPort(),
                     $request->getPort(),
                     $request->getPathInfo(),
-                    $request->getQueryString() ?: '');
+                    $request->getQueryString() ?: ''
+                );
                 $route = Route::match($content);
             } catch (ResourceNotFoundException $e) {
                 $request->setRoute([
@@ -61,23 +63,26 @@ class Keneral
                 return Controller::call($controller_class, $method, $request);
             }));
             return $response;
-        }catch (\Throwable $e){
-            switch (@$route['_type']){
+        } catch (\Throwable $e) {
+            switch (@$route['_type']) {
                 case Route::json:
                     return new Response(
                         ErrorFormat::json($e),
                         400,
-                        ['Content-Type'=>Path::get_mine('json')]);
+                        ['Content-Type'=>Path::get_mine('json')]
+                    );
                 case Route::html:
                     return new Response(
                         ErrorFormat::http($e),
                         400,
-                        ['Content-Type'=>Path::get_mine('html')]);
+                        ['Content-Type'=>Path::get_mine('html')]
+                    );
                 default:
                     return new Response(
                         ErrorFormat::text($e),
                         400,
-                        ['Content-Type'=>Path::get_mine('txt')]);
+                        ['Content-Type'=>Path::get_mine('txt')]
+                    );
             }
         }
     }

@@ -3,7 +3,6 @@
 
 namespace Bot\Packets;
 
-
 use Models\Bot;
 
 class AdminForbiddenRemovePacket implements \Bot\Packet

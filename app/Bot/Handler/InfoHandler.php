@@ -9,7 +9,6 @@ use Models\Bot;
 
 class InfoHandler implements Handler
 {
-
     public function isPacket($message, $firstChar, $count, $explode)
     {
         if ($count == 23) {
@@ -19,7 +18,7 @@ class InfoHandler implements Handler
 
     public function pharse($message)
     {
-        $a = Bot::decode(explode('>',$message));
+        $a = Bot::decode(explode('>', $message));
         $event = new InfoEvent();
         $event->user_id = $a[3];
         $event->first_name = $a[5];

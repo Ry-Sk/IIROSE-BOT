@@ -7,7 +7,6 @@ use Models\Bot;
 
 class JoinHandler implements Handler
 {
-
     public function isPacket($message, $firstChar, $count, $explode)
     {
         if ($count == 12
@@ -20,7 +19,7 @@ class JoinHandler implements Handler
 
     public function pharse($message)
     {
-        $a = Bot::decode(explode('>',$message));
+        $a = Bot::decode(explode('>', $message));
         return new JoinEvent(
             $a[5],
             $a[8],

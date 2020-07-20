@@ -25,7 +25,8 @@ class Item
     {
         return (string)$this->item->$name;
     }
-    public function getMessage(){
+    public function getMessage()
+    {
         $storgePath=Path::storge_path('public/plugins/rss/'.md5($this->description).'.png');
         \Co::exec('timeout 5 docker run --rm=true hserr/wkhtmltoimage "'.addslashes('data:text/html;charset=utf-8;base64,'.base64_encode($this->description)).'" - > "'.addslashes($storgePath).'"');
         return "新的RSS推送

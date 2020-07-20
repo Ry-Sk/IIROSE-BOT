@@ -1,6 +1,6 @@
 <?php
 require_once ROOT.'/vendor/autoload.php';
-spl_autoload_register(function ($className){
+spl_autoload_register(function ($className) {
     $filePaths =[
         ROOT . DIRECTORY_SEPARATOR . 'AdminPHP' . DIRECTORY_SEPARATOR . $className,
         ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . $className,

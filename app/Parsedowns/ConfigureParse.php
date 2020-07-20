@@ -9,7 +9,7 @@ class ConfigureParse extends \Parsedown
     private $config;
     private $configure;
 
-    function __construct($config,$configure)
+    public function __construct($config, $configure)
     {
         $this->config=$config;
         $this->configure = $configure;
@@ -20,8 +20,7 @@ class ConfigureParse extends \Parsedown
 
     protected function inlineInput($excerpt)
     {
-        if (preg_match('/^{input=(\w+)}/', $excerpt['text'], $matches))
-        {
+        if (preg_match('/^{input=(\w+)}/', $excerpt['text'], $matches)) {
             return [
 
                 // How many characters to advance the Parsedown's
@@ -35,14 +34,15 @@ class ConfigureParse extends \Parsedown
             ];
         }
     }
-    protected function plain($name){
-        if(!@$this->config[$name]){
+    protected function plain($name)
+    {
+        if (!@$this->config[$name]) {
             throw new NoConfigInfoInConfigJsonException();
         }
         return View::view('inputs/'.$this->config[$name]['type'])
-            ->with('name',$name)
-            ->with('default',@$this->configure[$name]?:$this->config[$name]['default'])
-            ->with('config',$this->config[$name])
+            ->with('name', $name)
+            ->with('default', @$this->configure[$name]?:$this->config[$name]['default'])
+            ->with('config', $this->config[$name])
             ->render();
     }
 }

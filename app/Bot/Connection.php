@@ -1,6 +1,7 @@
 <?php
 
 namespace Bot;
+
 use Bot\Exception\NetworkException;
 use Logger\Logger;
 use Swoole\Coroutine\Http\Client;
@@ -12,7 +13,7 @@ class Connection
     private $password;
     /** @var Client $client */
     private $client;
-    public function __construct($username,$password)
+    public function __construct($username, $password)
     {
         $this->username=$username;
         $this->password=$password;
@@ -23,13 +24,13 @@ class Connection
      * @param \Closure $receive
      * @throws NetworkException
      */
-    public function login($room,$receive)
+    public function login($room, $receive)
     {
         try {
             $this->client = new Client('m.iirose.com', 443, true);
             $ret = $this->client->upgrade('/');
             $handle = '*' . json_encode(
-                    [
+                [
                         'r' => $room,
                         'n' => $this->username,
                         'p' => md5($this->password),
@@ -41,55 +42,55 @@ class Connection
                         'mb' => '',
                         'fp' => '@' . md5($this->username)
                     ]
-                );
-            throw_if(!@$this->client->push($handle),new NetworkException());
+            );
+            throw_if(!@$this->client->push($handle), new NetworkException());
             @$this->client->push('=^v#');
             @$this->client->push(')#');
             @$this->client->push('>#');
 
-            go(function ()use($receive){
-                try{
-                    while (true){
+            go(function () use ($receive) {
+                try {
+                    while (true) {
                         $data=@$this->client->recv()->data;
-                        if(!$data){
+                        if (!$data) {
                             throw new NetworkException();
                         }
                         $receive($data);
                     }
-                }catch (Throwable $e){
+                } catch (Throwable $e) {
                     var_dump($e);
                 }
             });
-        }catch (NetworkException $e){
+        } catch (NetworkException $e) {
             $this->close();
             throw $e;
-        }catch(Throwable $e){
+        } catch (Throwable $e) {
             $this->close();
-            throw new NetworkException('NetWork fail',0,$e);
+            throw new NetworkException('NetWork fail', 0, $e);
         }
     }
 
     public function send($data)
     {
-        if(isset($this->client) && $this->client){
-            if(!@$this->client->push($data)){
+        if (isset($this->client) && $this->client) {
+            if (!@$this->client->push($data)) {
                 $this->close();
             }
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
     public function alive()
     {
-        if(!isset($this->client)){
+        if (!isset($this->client)) {
             return false;
         }
-        if(!$this->client){
+        if (!$this->client) {
             return false;
         }
-        if(!$this->client->connected){
+        if (!$this->client->connected) {
             return false;
         }
         return true;
@@ -99,10 +100,11 @@ class Connection
     {
         echo 'c';
         try {
-            if(isset($this->client) && $this->client){
+            if (isset($this->client) && $this->client) {
                 $this->client->close();
             }
             unset($this->client);
-        }catch (Throwable $e){}
+        } catch (Throwable $e) {
+        }
     }
 }

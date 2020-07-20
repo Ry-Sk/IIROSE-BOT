@@ -57,9 +57,9 @@ $a=json_decode('[
 {"url":"https:\/\/www.quhyu.xyz\/comments\/feed","owner":"1019349225","status":""},
 {"url":"https:\/\/www.quhyu.xyz\/feed","owner":"1073166996","status":"running"}
 ]
-',true);
+', true);
 $r=[];
-foreach ($a as $p){
+foreach ($a as $p) {
     $r[]=$p['url'];
 }
 echo json_encode($r);

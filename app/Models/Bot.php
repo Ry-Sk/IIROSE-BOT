@@ -145,28 +145,28 @@ class Bot extends Model implements Listenerable
 
     private function plugin()
     {
-        while(true) {
+        while (true) {
             try {
                 $plugins_list = BotPlugin::findByBot($this);
                 $plugins=[];
-                foreach ($plugins_list as $plugin){
+                foreach ($plugins_list as $plugin) {
                     $plugins[$plugin->id]=$plugin;
                 }
                 foreach ($plugins as $plugin) {
-                    if(!isset($this->plugins[$plugin->id])){
+                    if (!isset($this->plugins[$plugin->id])) {
                         $this->plugins[$plugin->id]=$plugin;
                         $this->plugins[$plugin->id]->loading($this);
                     }
                 }
                 foreach ($this->plugins as $plugin) {
-                    if(!isset($plugins[$plugin->id])){
+                    if (!isset($plugins[$plugin->id])) {
                         unset($this->plugins[$plugin->id]);
                     }
                 }
                 foreach ($this->plugins as $plugin) {
                     $this->plugins[$plugin->id]->check();
                 }
-            }catch (Throwable $e){
+            } catch (Throwable $e) {
                 ErrorFormat::dump($e);
             }
             \Co::sleep(5);
@@ -233,15 +233,16 @@ class Bot extends Model implements Listenerable
     private function timer()
     {
         swoole_timer_tick(
-            5000, function () {
-            $this->packet(new PingPacket());
-        }
+            5000,
+            function () {
+                $this->packet(new PingPacket());
+            }
         );
     }
     private function ticker()
     {
         while (true) {
-            foreach ($this->plugins as $plugin){
+            foreach ($this->plugins as $plugin) {
                 $plugin->tick();
             }
             \Co::sleep(0.1);
@@ -284,7 +285,8 @@ class Bot extends Model implements Listenerable
         return $this->handles[$handleClass];
     }
 
-    private function loadCommand(){
+    private function loadCommand()
+    {
         $this->command = new Application('IIROSE-BOT-' . $this->username, '瞄呜');
     }
     public function addCommand($configure)
@@ -296,7 +298,7 @@ class Bot extends Model implements Listenerable
     {
         unset($this->commands[$configure->sign]);
         $this->loadCommand();
-        foreach ($this->commands as $command){
+        foreach ($this->commands as $command) {
             $this->command->add($command);
         }
     }
@@ -314,7 +316,6 @@ class Bot extends Model implements Listenerable
             try {
                 $this->command->run(new InputUtils(substr($chatEvent->message, 1), $chatEvent), $output);
             } catch (ExitException $e) {
-
             } catch (Throwable $e) {
                 ErrorFormat::dump($e);
             }
@@ -332,7 +333,6 @@ class Bot extends Model implements Listenerable
             try {
                 Bot::$instance->command->run(new InputUtils(substr($personChatEvent->message, 1), $personChatEvent), $output);
             } catch (ExitException $e) {
-
             } catch (Throwable $e) {
                 ErrorFormat::dump($e);
             }
@@ -347,5 +347,4 @@ class Bot extends Model implements Listenerable
     {
         return true;
     }
-
 }

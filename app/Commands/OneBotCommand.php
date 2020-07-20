@@ -3,7 +3,6 @@
 
 namespace Commands;
 
-
 use Console\Commands\Command;
 use DB\DataBase;
 use Keneral;
@@ -17,7 +16,7 @@ class OneBotCommand extends Command
     protected static $defaultName='bot:one';
     protected function configure()
     {
-        $this->addArgument('id',InputArgument::REQUIRED);
+        $this->addArgument('id', InputArgument::REQUIRED);
         $this->setProcessTitle('IIROSE-BOT');
         $this->setDescription('running bot with id');
         $this->setHelp('id should be in');

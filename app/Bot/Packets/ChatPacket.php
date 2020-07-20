@@ -3,7 +3,6 @@
 
 namespace Bot\Packets;
 
-
 class ChatPacket implements \Bot\Packet
 {
     public $message;

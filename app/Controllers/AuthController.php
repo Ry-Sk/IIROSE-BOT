@@ -1,5 +1,6 @@
 <?php
 namespace Controllers;
+
 use Exceptions\AuthException;
 use GuzzleHttp\Client;
 use Http\Request;
@@ -7,7 +8,8 @@ use Models\Bot;
 
 class AuthController extends \Controller\Controllers\Controller
 {
-    public function login(Request $request){
+    public function login(Request $request)
+    {
         $client = new Client();
         $response = $client->post(
             'https://a.iirose.com/lib/php/system/login_member_ajax.php',
@@ -18,14 +20,14 @@ class AuthController extends \Controller\Controllers\Controller
                 ]
             ]
         );
-        if($response
-            && $response->getBody()){
+        if ($response
+            && $response->getBody()) {
             $content=$response->getBody()->getContents();
-            if(strlen($content)==13){
+            if (strlen($content)==13) {
                 $uid=$content;
                 /** @var Bot $bot */
-                $bot= Bot::where('uid','=',$uid)->first();
-                if(!$bot){
+                $bot= Bot::where('uid', '=', $uid)->first();
+                if (!$bot) {
                     $bot=new Bot();
                     $bot->uid=$uid;
                     $bot->username=$request->get('username');
@@ -42,7 +44,7 @@ class AuthController extends \Controller\Controllers\Controller
                         'token'=>$bot->token,
                     ],
                 ]);
-            }else{
+            } else {
                 throw new AuthException("密码错误");
             }
         }

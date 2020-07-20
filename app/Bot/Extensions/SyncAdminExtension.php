@@ -13,6 +13,7 @@ use Bot\Models\Cache;
 use Bot\Packets\InfoPacket;
 use Logger\Logger;
 use Models\Bot;
+
 //TODO: 别想用这个，EVENT Handler都没有做好。
 trait SyncAdminExtension
 {
@@ -49,41 +50,49 @@ trait SyncAdminExtension
     }
     public function getUserId($user_name)
     {
-        if(@$this->userId[$user_name]
-            && $this->userId[$user_name]->isExpire()){
+        if (@$this->userId[$user_name]
+            && $this->userId[$user_name]->isExpire()) {
             return $this->userId[$user_name]->user_id;
-        }else{
+        } else {
             $info=$this->getInfo($user_name);
-            if(is_null($info)){
+            if (is_null($info)) {
                 return null;
             }
             return $info->user_id;
         }
     }
 
-    public function syncInfoExtensionOnInfoEvent(InfoEvent $event){
+    public function syncInfoExtensionOnInfoEvent(InfoEvent $event)
+    {
         $this->answer = $event;
     }
-    public function syncInfoExtensionOnNoUserEvent(NoUserEvent $event){
+    public function syncInfoExtensionOnNoUserEvent(NoUserEvent $event)
+    {
         $this->aanswer = false;
     }
-    public function syncInfoExtensionOnUserInfoEvent(UserInfoEvent $event){
+    public function syncInfoExtensionOnUserInfoEvent(UserInfoEvent $event)
+    {
         $this->userId[$event->username]=new Cache($event->user_id);
         $this->cache[$event->username]=$event;
     }
-    public function syncInfoExtensionOnChatEvent(ChatEvent $event){
+    public function syncInfoExtensionOnChatEvent(ChatEvent $event)
+    {
         $this->userId[$event->user_name]=new Cache($event->user_id);
     }
-    public function syncInfoExtensionOnPersonChatEvent(PersonChatEvent $event){
+    public function syncInfoExtensionOnPersonChatEvent(PersonChatEvent $event)
+    {
         $this->userId[$event->user_name]=new Cache($event->user_id);
     }
-    public function syncInfoExtensionOnJoinEvent(JoinEvent $event){
+    public function syncInfoExtensionOnJoinEvent(JoinEvent $event)
+    {
         $this->userId[$event->user_name]=new Cache($event->user_id);
     }
-    public function syncInfoExtensionOnGotoEvent(GotoEvent $event){
+    public function syncInfoExtensionOnGotoEvent(GotoEvent $event)
+    {
         $this->userId[$event->user_name]=new Cache($event->user_id);
     }
-    public function syncInfoExtensionOnLeaveEvent(LeaveEvent $event){
+    public function syncInfoExtensionOnLeaveEvent(LeaveEvent $event)
+    {
         $this->userId[$event->user_name]=new Cache($event->user_id);
     }
 }

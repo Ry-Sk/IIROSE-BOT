@@ -3,5 +3,4 @@ namespace Model;
 
 class Model
 {
-
 }

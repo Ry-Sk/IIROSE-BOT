@@ -6,4 +6,5 @@
         [],
         'app/Commands'=>'\\Commands',
         'AdminPHP/Commands'=>'\\Commands',
-    ]);
+    ]
+);
