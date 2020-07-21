@@ -2,8 +2,6 @@
 host=${1:-0.0.0.0}
 port=${2:-8008}
 echo listened $host:$port
-docker pull hserr/wkhtmltoimage
-docker pull jgoldfar/maxima-docker:debian-latest
 docker run -it \
   --name="iirose-bot-dev" \
   --privileged \

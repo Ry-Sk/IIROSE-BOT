@@ -3,6 +3,8 @@ echo 正在检查更新
 git pull -f
 echo 正在安装
 composer install
+docker pull hserr/wkhtmltoimage
+docker pull jgoldfar/maxima-docker:debian-latest
 echo 正在创建数据文件
 mkdir ./storge
 echo 正在创建数据库
