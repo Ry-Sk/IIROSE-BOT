@@ -35,7 +35,7 @@ class BotCommand extends Command
                     //echo 'checkA';
                     // A.将数据库转换为BOT LIST
                     /** @var Bot[] $all_bots */
-                    $all_bots = Bot::where('enable', '=', 1)->get();
+                    $all_bots = Bot::where('enable', '!=', 0)->get();
                     /** @var Bot[] $bot_list */
                     $bot_list = [];
                     foreach ($all_bots as $per_bot) {

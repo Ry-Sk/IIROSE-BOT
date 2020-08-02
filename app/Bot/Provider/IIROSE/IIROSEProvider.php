@@ -21,7 +21,6 @@ class IIROSEProvider extends Provider
     use SyncInfoExtension;
     use AutoListener;
     use CodeExtension;
-    use SyncInfoExtension;
     public static $instance;
     /** @var Bot $bot */
     private $bot;
