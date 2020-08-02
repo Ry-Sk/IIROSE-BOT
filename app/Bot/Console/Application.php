@@ -36,6 +36,7 @@ use Symfony\Component\Console\Input\InputAwareInterface;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -103,9 +104,11 @@ class Application extends \Symfony\Component\Console\Application
     /**
      * Runs the current application.
      *
+     * @param InputInterface $input
+     * @param BufferedOutput $output
      * @return int 0 if everything went fine, or an error code
      *
-     * @throws Exception When running fails. Bypass this when {@link setCatchExceptions()}.
+     * @throws Throwable
      */
     public function run(InputInterface $input = null, OutputInterface $output = null)
     {

@@ -3,9 +3,7 @@
 
 namespace Plugin\Trpg;
 
-use Bot\Event\ChatEvent;
 use Bot\Event\CommandEvent;
-use Bot\Packets\ChatPacket;
 use Bot\PluginLoader\PhpPlugin\PhpPlugin;
 use Console\ErrorFormat;
 
@@ -15,17 +13,14 @@ class Trpg extends PhpPlugin
     {
         if ($event->sign=='trpg:r') {
             try {
-                //1d100
                 $all = strtoupper($event->input->getArgument('exp'));
                 $parms = explode('+', $all);
-                //var_dump($parms);
                 $o = 0;
                 foreach ($parms as $parm) {
                     $pparms = explode('D', $parm);
                     if ($pparms[0] > 100) {
                         return 0;
                     }
-                    //var_dump($pparms);
                     for ($i = 0; $i < $pparms[0]; $i++) {
                         $r = $this->bcrandom(1, $pparms[1]);
                         $o = bcadd($o, $r);

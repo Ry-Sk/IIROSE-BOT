@@ -1,45 +1,52 @@
 <?php
 namespace Bot\PluginLoader;
 
-use Bot\AutoListener;
+use Bot\Extensions\ManualListener;
 use Bot\Listener;
-use Bot\Listenerable;
 use Bot\PluginLoader;
 use Bot\PluginLoader\JsPlugin\JsPackets;
+use Closure;
 use Console\ErrorFormat;
 use File\Path;
-use Bot\PluginLoader\JsPlugin\JsEvents;
+use Bot\PluginLoader\JsPlugin\JsPhpProvider;
 use Models\Bot;
 use SplQueue;
 use V8Js;
 
-class JsPluginLoader extends PluginLoader implements Listenerable
+class JsPluginLoader extends PluginLoader
 {
+    use ManualListener;
     /** @var V8Js $plugin */
     private $plugin;
     private $basePath;
     /** @var SplQueue $queue */
     protected $receiveQueue;
+    /** @var Closure $ticker */
+    protected $ticker;
     public function load()
     {
         $this->load=true;
         $this->basePath=Path::formt_dir(ROOT.'/plugins/'.$this->slug);
         $this->receiveQueue=new SplQueue();
+        $this->ticker=[];
     }
     public function addListener($event, $listener)
     {
         $className=$event;
-        if (substr($className, 0, 10)=='Bot\\Event\\') {
-            $slug=substr($className, 10, strlen($className)-15);
-            $className='Bot\\Handler\\'.$slug.'Handler';
-            Bot::$instance->getHandler($className)->addListener(
-                new Listener($this, function ($event) use ($listener) {
+        $this->listener($event,
+            function ($event) use($listener){
                     $this->receiveQueue->push(function () use ($event,$listener) {
                         $listener($event);
                     });
-                })
-            );
-        }
+            });
+    }
+    public function addTicker($ticker)
+    {
+        $this->ticker[]=function () use($ticker){
+                $this->receiveQueue->push(function () use ($ticker) {
+                    $ticker();
+                });
+            };
     }
     public function tick()
     {
@@ -56,11 +63,11 @@ class JsPluginLoader extends PluginLoader implements Listenerable
                 $this->plugin->addListener = function ($event, $listener) {
                     $this->addListener($event, $listener);
                 };
-                $this->plugin->sendPacket = function ($packet) {
-                    $this->bot->packet($packet);
+                $this->plugin->addTicker = function ($ticker) {
+                    $this->addTicker($ticker);
                 };
-                $this->plugin->events = new JsEvents();
-                $this->plugin->packets = new JsPackets();
+                $this->plugin->bot = $this->bot;
+                $this->plugin->php = new JsPhpProvider();
                 $this->plugin->configure = $this->configure;
                 $this->plugin->executeString(file_get_contents($this->basePath . 'Plugin/' . $this->slug . '.js'));
             }
@@ -72,5 +79,10 @@ class JsPluginLoader extends PluginLoader implements Listenerable
         } catch (\Throwable $e) {
             ErrorFormat::dump($e);
         }
+    }
+
+    function loaded()
+    {
+        return $this->load;
     }
 }

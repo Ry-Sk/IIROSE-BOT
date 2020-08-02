@@ -5,7 +5,6 @@ namespace Bot;
 
 use Bot\Console\InputUtils;
 use Bot\Event\CommandEvent;
-use Bot\Handler\CommandHandler;
 use Models\Bot;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -50,14 +49,16 @@ class Command extends \Symfony\Component\Console\Command\Command
         if (!$input instanceof InputUtils) {
             return 0;
         }
-        Bot::$instance
-            ->getHandler(CommandHandler::class)
-            ->onEvent(new CommandEvent(
+        Bot::$instance->event(new CommandEvent(
                 $this->sign,
                 $input->getSender(),
                 $input,
                 $output
             ));
         return 0;
+    }
+    public function getSynopsis(bool $short = false)
+    {
+        return parent::getSynopsis($short);
     }
 }

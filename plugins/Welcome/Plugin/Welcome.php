@@ -3,19 +3,15 @@
 
 namespace Plugin\Welcome;
 
-use Bot\Event\ChatEvent;
-use Bot\Event\JoinEvent;
-use Bot\Packets\ChatPacket;
-use Bot\Packets\LikePacket;
 use Bot\PluginLoader\PhpPlugin\PhpPlugin;
-use Console\ErrorFormat;
-use GuzzleHttp\Client;
-use Models\Bot;
+use Bot\Provider\IIROSE\Event\JoinEvent;
+use Bot\Provider\IIROSE\IIROSEProvider;
+use Bot\Provider\IIROSE\Packets\ChatPacket;
 
 class Welcome extends PhpPlugin
 {
     public function onJoin(JoinEvent $event)
     {
-        $this->bot->packet(new ChatPacket(' [*'.$event->user_name.'*] 欢迎回家～', $event->color));
+        IIROSEProvider::$instance->packet(new ChatPacket(' [*'.$event->user_name.'*] 欢迎回家～', $event->color));
     }
 }

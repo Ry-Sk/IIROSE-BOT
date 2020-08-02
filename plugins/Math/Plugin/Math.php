@@ -5,7 +5,6 @@ namespace Plugin\Math;
 
 use Bot\Event\ChatEvent;
 use Bot\Event\CommandEvent;
-use Bot\Packets\ChatPacket;
 use Bot\PluginLoader\PhpPlugin\PhpPlugin;
 use Co\System;
 use Console\ErrorFormat;

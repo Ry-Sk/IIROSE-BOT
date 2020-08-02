@@ -5,7 +5,7 @@ namespace Bot;
 
 use Models\Bot;
 
-class PluginLoader implements Listenerable
+class PluginLoader
 {
     /** @var Bot $bot */
     protected $bot;
@@ -31,11 +31,6 @@ class PluginLoader implements Listenerable
         $this->unload();
         $this->configure=json_decode($configure, true);
         $this->load();
-    }
-
-    public function loaded()
-    {
-        return $this->load;
     }
 
     public function tick()

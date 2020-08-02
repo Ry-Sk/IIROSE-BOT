@@ -11,7 +11,6 @@
 
 namespace Bot\Console;
 
-use Symfony\Component\Console\Helper\DescriptorHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;

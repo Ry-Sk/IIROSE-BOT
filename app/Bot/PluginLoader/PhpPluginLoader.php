@@ -1,13 +1,12 @@
 <?php
 namespace Bot\PluginLoader;
 
-use Bot\AutoListener;
+use Bot\Extensions\AutoListener;
 use Bot\Listener;
-use Bot\Listenerable;
 use Bot\PluginLoader;
 use Bot\PluginLoader\PhpPlugin\PhpPlugin;
 
-class PhpPluginLoader extends PluginLoader implements Listenerable
+class PhpPluginLoader extends PluginLoader
 {
     use AutoListener;
     /** @var PhpPlugin $plugin */
@@ -18,7 +17,7 @@ class PhpPluginLoader extends PluginLoader implements Listenerable
         $this->bot->getAutoLoader()->add('Plugin\\' . $this->slug, ROOT . '/plugins/' . $this->slug . '/Plugin');
         $plugin_class = '\\Plugin\\' . $this->slug . '\\' . $this->slug;
         $this->plugin = new $plugin_class($this->bot, $this->configure, $this);
-        $this->registerListeners($this->plugin);
+        $this->registerListener($this->plugin);
     }
     public function unload()
     {
@@ -29,5 +28,10 @@ class PhpPluginLoader extends PluginLoader implements Listenerable
     {
         parent::tick();
         $this->plugin->tick();
+    }
+
+    function loaded()
+    {
+        return $this->load;
     }
 }

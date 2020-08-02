@@ -28,7 +28,7 @@ class Item
     public function getMessage()
     {
         $storgePath=Path::storge_path('public/plugins/rss/'.md5($this->description).'.png');
-        \Co::exec('timeout 5 docker run --rm=true hserr/wkhtmltoimage "'.addslashes('data:text/html;charset=utf-8;base64,'.base64_encode($this->description)).'" - > "'.addslashes($storgePath).'"');
+        //\Co::exec('timeout 5 docker run --rm=true hserr/wkhtmltoimage "'.addslashes('data:text/html;charset=utf-8;base64,'.base64_encode($this->description)).'" - > "'.addslashes($storgePath).'"');
         return "新的RSS推送
 标题：$this->title
 描述：[".url('storge/plugins/rss/'.basename($storgePath))."]

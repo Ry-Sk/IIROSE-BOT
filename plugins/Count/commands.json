@@ -3,19 +3,11 @@
     "sign": "count:user",
     "aliases":["cu"],
     "description": "看看你说了多少话",
-    "help": "/count:user 自己或at一个人",
+    "help": "/count:user",
     "usages": [
-      "/count:user",
-      "/count:user [*logos*]"
+      "/count:user"
     ],
     "arguments": [
-      {
-        "name": "who",
-        "require": false,
-        "array": false,
-        "describle": "要查看谁的，默认自己",
-        "default": false
-      }
     ],
     "options": [
     ]

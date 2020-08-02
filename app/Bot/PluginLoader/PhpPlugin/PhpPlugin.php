@@ -1,8 +1,6 @@
 <?php
 namespace Bot\PluginLoader\PhpPlugin;
 
-use Bot\Event\ChatEvent;
-use Bot\Handler\ChatHandler;
 use Bot\Listener;
 use Models\Bot;
 

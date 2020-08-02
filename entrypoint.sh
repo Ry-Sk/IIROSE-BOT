@@ -6,6 +6,7 @@ docker run -it \
   --name="iirose-bot-dev" \
   --privileged \
   -v /var/run/docker.sock:/var/run/docker.sock \
+  --net=host \
   -v $(which docker):/bin/docker \
   -v $(pwd):$(pwd) \
   -v $(pwd)/storge/public:$(pwd)/public/storge \

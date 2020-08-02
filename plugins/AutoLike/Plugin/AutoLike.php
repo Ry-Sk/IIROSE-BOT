@@ -3,29 +3,23 @@
 
 namespace Plugin\AutoLike;
 
-use Bot\Event\ChatEvent;
-use Bot\Event\CommandEvent;
-use Bot\Event\InfoEvent;
-use Bot\Event\LikeEvent;
-use Bot\Event\UnlikeEvent;
-use Bot\Event\UserInfoEvent;
-use Bot\Packets\ChatPacket;
-use Bot\Packets\LikePacket;
-use Bot\Packets\SourcePacket;
-use Bot\Packets\UnlikePacket;
 use Bot\PluginLoader\PhpPlugin\PhpPlugin;
-use Models\Bot;
+use Bot\Provider\IIROSE\Event\LikeEvent;
+use Bot\Provider\IIROSE\Event\UnlikeEvent;
+use Bot\Provider\IIROSE\IIROSEProvider;
+use Bot\Provider\IIROSE\Packets\LikePacket;
+use Bot\Provider\IIROSE\Packets\UnlikePacket;
 
 class AutoLike extends PhpPlugin
 {
     public function onLike(LikeEvent $event)
     {
-        $user_id=$this->bot->getUserId($event->user_name);
-        $this->bot->packet(new LikePacket($user_id));
+        $user_id=IIROSEProvider::$instance->getUserId($event->user_name);
+        IIROSEProvider::$instance->packet(new LikePacket($user_id,'谢谢'));
     }
     public function onUnlike(UnlikeEvent $event)
     {
-        $user_id=$this->bot->getUserId($event->user_name);
-        $this->bot->packet(new UnlikePacket($user_id, '就是这样'));
+        $user_id=IIROSEProvider::$instance->getUserId($event->user_name);
+        IIROSEProvider::$instance->packet(new UnlikePacket($user_id, '就是这样'));
     }
 }

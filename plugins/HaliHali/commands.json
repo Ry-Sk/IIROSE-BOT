@@ -1,0 +1,49 @@
+[
+  {
+    "sign": "halihali:search",
+    "aliases":["hs"],
+    "description": "搜索视频",
+    "help": "/halihali:search 视频的名称",
+    "usages": [
+      "/halihali:search 名侦探柯南"
+    ],
+    "arguments": [
+      {
+        "name": "name",
+        "require": true,
+        "array": false,
+        "describle": "视频的名称",
+        "default": null
+      }
+    ],
+    "options": [
+    ]
+  },
+  {
+    "sign": "halihali:play",
+    "aliases":["ho"],
+    "description": "点播视频",
+    "help": "/halihali:play 视频id 集数",
+    "usages": [
+      "/halihali:play 3747 1"
+    ],
+    "arguments": [
+      {
+        "name": "id",
+        "require": true,
+        "array": false,
+        "describle": "视频的id",
+        "default": null
+      },
+      {
+        "name": "number",
+        "require": false,
+        "array": false,
+        "describle": "视频的集数",
+        "default": null
+      }
+    ],
+    "options": [
+    ]
+  }
+]

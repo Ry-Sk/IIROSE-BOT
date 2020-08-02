@@ -5,15 +5,10 @@ namespace Plugin\Count;
 
 use Bot\Event\ChatEvent;
 use Bot\Event\CommandEvent;
-use Bot\Packets\ChatPacket;
 use Bot\PluginLoader\PhpPlugin\PhpPlugin;
-use Console\ErrorFormat;
 use DB\DataBase;
-use GuzzleHttp\Client;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Date;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 use Plugin\Count\Models\PluginCount;
 
 class Count extends PhpPlugin
@@ -37,12 +32,12 @@ class Count extends PhpPlugin
         /** @var PluginCount $pluginCount */
         $pluginCount=PluginCount
             ::where('bot_id', '=', $this->bot->id)
-            ->where('user_id', '=', $event->user_id)
+            ->where('user_id', '=', $event->getUserId())
             ->first();
         if (!$pluginCount) {
             $pluginCount=new PluginCount();
             $pluginCount->bot_id=$this->bot->id;
-            $pluginCount->user_id=$event->user_id;
+            $pluginCount->user_id=$event->getUserId();
             $pluginCount->count=0;
             $pluginCount->last=Date::today();
         }
@@ -54,19 +49,19 @@ class Count extends PhpPlugin
         $pluginCount->saveOrFail();
     }
 
-    private function count($user_name)
+    private function count($user_id)
     {
         /** @var PluginCount $pluginCount */
         $pluginCount=PluginCount
             ::where('bot_id', '=', $this->bot->id)
-            ->where('user_id', '=', $this->bot->getUserId($user_name))
+            ->where('user_id', '=', $user_id)
             ->first();
         if (!Date::today()->isSamedAY($pluginCount->last)) {
             $pluginCount->count=0;
         }
         return '=========发言统计=========
-用户： [*'.$user_name.'*] 
-机器人： [*'.$this->bot->username.'*] 
+用户： '.$user_id.' 
+机器人： '.$this->bot->username.'
 时间：'.date('Y-m-d').'
 发言数：'.$pluginCount->count;
     }
@@ -91,12 +86,7 @@ class Count extends PhpPlugin
         if ($event->sign=='count:bot') {
             $event->output->write($this->room());
         } elseif ($event->sign=='count:user') {
-            $arg=$event->input->getArgument('who');
-            if ($arg) {
-                $event->output->write($this->count(substr($arg, 2, strlen($arg)-4)));
-            } else {
-                $event->output->write($this->count($event->sender->getUsername()));
-            }
+            $event->output->write($this->count($event->sender->getUserId()));
         }
     }
 }

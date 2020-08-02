@@ -1,18 +1,17 @@
 <?php
 namespace Bot\Extensions;
 
-use Bot\Event\ChatEvent;
-use Bot\Event\GotoEvent;
-use Bot\Event\InfoEvent;
-use Bot\Event\JoinEvent;
-use Bot\Event\LeaveEvent;
-use Bot\Event\NoUserEvent;
-use Bot\Event\PersonChatEvent;
-use Bot\Event\UserInfoEvent;
 use Bot\Models\Cache;
-use Bot\Packets\InfoPacket;
-use Logger\Logger;
-use Models\Bot;
+use Bot\Provider\IIROSE\Event\ChatEvent;
+use Bot\Provider\IIROSE\Event\GotoEvent;
+use Bot\Provider\IIROSE\Event\InfoEvent;
+use Bot\Provider\IIROSE\Event\JoinEvent;
+use Bot\Provider\IIROSE\Event\LeaveEvent;
+use Bot\Provider\IIROSE\Event\NoUserEvent;
+use Bot\Provider\IIROSE\Event\PersonChatEvent;
+use Bot\Provider\IIROSE\Event\UserInfoEvent;
+use Bot\Provider\IIROSE\IIROSEProvider;
+use Bot\Provider\IIROSE\Packets\InfoPacket;
 
 trait SyncInfoExtension
 {
@@ -35,7 +34,7 @@ trait SyncInfoExtension
             }
         }
         $this->answer = null;
-        Bot::$instance->packet(new InfoPacket($user_name));
+        IIROSEProvider::$instance->packet(new InfoPacket($user_name));
         for ($i = 0; $i < 50; $i++) {
             if ($this->answer !== null) {
                 $this->lock = false;

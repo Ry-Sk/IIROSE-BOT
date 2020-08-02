@@ -2,18 +2,19 @@
 
 namespace Bot\Event;
 
-use Bot\Sender;
+use Bot\Models\Sender;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CommandEvent
+class CommandEvent extends Event
 {
     public $sign;
     /** @var Sender $sender */
     public $sender;
     /** @var InputInterface $input */
     public $input;
-    /** @var OutputInterface $output */
+    /** @var BufferedOutput $output */
     public $output;
     public function __construct($sign, Sender $sender, InputInterface $input, OutputInterface $output)
     {

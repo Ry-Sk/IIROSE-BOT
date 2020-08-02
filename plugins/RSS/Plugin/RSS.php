@@ -3,18 +3,10 @@
 
 namespace Plugin\RSS;
 
-use Bot\Event\ChatEvent;
-use Bot\Event\CommandEvent;
-use Bot\Packets\ChatPacket;
 use Bot\PluginLoader\PhpPlugin\PhpPlugin;
 use Console\ErrorFormat;
 use DB\DataBase;
-use GuzzleHttp\Client;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Date;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
-use Plugin\Count\Models\PluginCount;
 use Plugin\RSS\Models\PluginRssPushes;
 
 class RSS extends PhpPlugin
@@ -52,7 +44,9 @@ class RSS extends PhpPlugin
                                 $pluginRssPushes->bot_id=$this->bot->id;
                                 $pluginRssPushes->guid=$item->guid;
                                 $pluginRssPushes->saveOrFail();
-                                $this->bot->packet(new ChatPacket($item->getMessage()));
+                                foreach($this->bot->provider->getGroupList() as $group){
+                                    $this->bot->provider->sendRoomChat($group,$item->getMessage());
+                                }
                             }
                         }
                     } catch (\Throwable $e) {
@@ -73,7 +67,7 @@ class RSS extends PhpPlugin
                                 $pluginRssPushes->bot_id=$this->bot->id;
                                 $pluginRssPushes->guid=$item->guid;
                                 $pluginRssPushes->saveOrFail();
-                                $this->bot->packet(new ChatPacket($item->getMessage()));
+                                $this->bot->provider->sendRoomChat($group,$item->getMessage());
                             }
                         }
                     } catch (\Throwable $e) {
