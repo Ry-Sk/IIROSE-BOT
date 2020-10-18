@@ -1,0 +1,15 @@
+[
+  {
+    "sign": "bot:cut",
+    "aliases":["cut"],
+    "description": "切掉机器人点播的内容",
+    "help": "/bot:cut",
+    "usages": [
+      "/bot:cut"
+    ],
+    "arguments": [
+    ],
+    "options": [
+    ]
+  }
+]
