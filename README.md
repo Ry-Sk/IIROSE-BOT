@@ -1,71 +1,52 @@
-# IIROSE-BOT
+<p align="center">
+<img src="https://i.loli.net/2020/05/11/bRMo78CNJP4HIiX.png" alt="iirose" width="100">
+</p>
+<h1 align="center">IIROSE-BOT</h1>
 
-这是一个为[IIROSE](https://iirose.com/)设计的机器人框架
-
-## 基础使用
-
-打开运行站点（添加站点请提交pr）
-
-1. [官方站](bot.imoe.xyz)
-
-输入你机器人的用户名密码进行登录。
-
-(机器人用户名需要在Ruby处报备)
-
-在插件市场选择需要使用的插件点击添加
-
-选择完成后进入进行配置
-
-随后机器人将会前往机器人测试房间  [_5f06817deec1d_] ，在测试完成后联系hs_err更换房间。
+> 这是一个为[IIROSE](https://iirose.com/)设计的机器人框架
 
 ## 本地运行（开发环境）
 
-请先安装git,docker
+```bash
+# 安装docker
+curl -sSL https://get.daocloud.io/docker | sh
 
-克隆本项目
+# Git请自行用包管理安装
+# Ubuntu / Debian 系
+sudo apt install git
+# Redhat / Centos 系
+sudo yum install git
+# Arch 系
+sudo pacman -Sy git
+# Alpine 
+sudo apk add git
 
-```shell
+# 克隆本项目
 git clone https://github.com/iirose-tools/iirose-bot.git
-```
 
-进入项目目录
-
-```shell
+# 进入项目目录
 cd iirose-bot
-```
 
-运行docker
-
-```shell
+# 运行 docker
 ./entrypoint.sh # 可加参数，./entrypoint.sh host port
-```
 
-composer安装
-
-```shell
+# composer 安装
 composer install
-```
 
-执行安装脚本
-
-```shell
+# 执行安装脚本
 ./install.sh
-```
 
-运行站点
-
-```shell
+# 运行站点
 ./iirosebot run
 ```
-
-访问测试[http://localhost:8008](http://localhost:8008)
+> 访问测试 [http://localhost:8008](http://localhost:8008)
 
 ## 插件开发
 
-请转到wiki
+> 请转到 ~~wiki~~ 还没有写
 
 ## 前端开发
 
-遵循API即可（是不是可以完成一些奇奇怪怪的程序？例如......易语言插件？）
+> 遵循API即可（是不是可以完成一些奇奇怪怪的程序？例如......易语言插件？）
 
-[POSTMAN文档](https://documenter.getpostman.com/view/10410469/T1DiFzz8?version=latest)
+[POSTMAN文档 ](https://documenter.getpostman.com/view/10410469/T1DiFzz8?version=latest)
