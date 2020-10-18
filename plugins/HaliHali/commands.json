@@ -21,7 +21,7 @@
   },
   {
     "sign": "halihali:play",
-    "aliases":["ho"],
+    "aliases":["hp"],
     "description": "点播视频",
     "help": "/halihali:play 视频id 集数",
     "usages": [

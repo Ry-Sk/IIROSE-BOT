@@ -1,0 +1,15 @@
+[
+  {
+    "sign": "hitokoto:all",
+    "aliases":["h"],
+    "description": "随机一言",
+    "help": "/hitokoto:all",
+    "usages": [
+      "/hitokoto:all"
+    ],
+    "arguments": [
+    ],
+    "options": [
+    ]
+  }
+]

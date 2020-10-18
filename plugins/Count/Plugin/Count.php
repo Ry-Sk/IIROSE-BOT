@@ -59,7 +59,8 @@ class Count extends PhpPlugin
         if (!Date::today()->isSamedAY($pluginCount->last)) {
             $pluginCount->count=0;
         }
-        return '=========发言统计=========
+        return '发言统计
+-------------------
 用户： '.$user_id.' 
 机器人： '.$this->bot->username.'
 时间：'.date('Y-m-d').'
@@ -75,7 +76,8 @@ class Count extends PhpPlugin
             ::where('bot_id', '=', $this->bot->id)
             ->where('last', '=', Date::today())
             ->count();
-        return '=========机器人统计=========
+        return '机器人统计
+----------------
 机器人： [*'.$this->bot->username.'*] 
 时间：'.date('Y-m-d').'
 发言数：'.$chatCount.'
