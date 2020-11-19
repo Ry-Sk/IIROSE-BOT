@@ -20,7 +20,7 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag hserr/iirose-bot:dev
     - name: Login Docker account
-      run: 
-        docker login --username="${{ secrets.USERNAME }}" --password="${{ secrets.PASSWORD }}"
-        docker push hserr/iirose-bot:dev
+      run: docker login --username="${{ secrets.USERNAME }}" --password="${{ secrets.PASSWORD }}"
+    - name: Push image
+      run: docker push hserr/iirose-bot:dev
       
