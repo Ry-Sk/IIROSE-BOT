@@ -9,7 +9,7 @@ RUN apt update && \
     cd swoole-src && \
     git checkout v4.5.7 && \
     phpize && \
-    ./configure --enable-openssl --enable-sockets --enable-http2--enable-mysqlnd && \
+    ./configure --enable-openssl --enable-sockets --enable-http2 --enable-mysqlnd && \
     make && make install && \
     cd .. && \
     rm -rf swoole-src && \
