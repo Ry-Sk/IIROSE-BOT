@@ -1,7 +1,7 @@
 FROM 54ik1/php-v8js
 ENV TZ Asia/Shanghai
 RUN apt update && \
-    apt install libssl-dev libzip-dev -y && \
+    apt install libssl-dev libzip-dev libltdl-dev libnss3 mediainfo -y && \
     docker-php-ext-install sockets && \
     docker-php-ext-install bcmath && \
     docker-php-ext-install zip && \
@@ -17,3 +17,4 @@ RUN apt update && \
     apt-get autoremove --purge -y  && \
     apt-get clean -y
 ENTRYPOINT [ "/bin/bash" ]
+ENV PS1="\h:\w\$ "

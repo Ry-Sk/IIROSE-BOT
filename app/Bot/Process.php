@@ -13,8 +13,7 @@ class Process
 
     public function kill()
     {
-        //proc_close($this->pool);
-        proc_terminate($this->pool);
+        posix_kill(proc_get_status($this->pool)['pid']+1,15);
     }
 
     public function __construct($command, $name)

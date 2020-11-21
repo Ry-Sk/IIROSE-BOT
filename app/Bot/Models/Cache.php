@@ -13,7 +13,7 @@ class Cache
         $this->time=time();
     }
 
-    public function isExpire($timeout=120)
+    public function isExpire($timeout=200)
     {
         return $this->time < time()-$timeout;
     }

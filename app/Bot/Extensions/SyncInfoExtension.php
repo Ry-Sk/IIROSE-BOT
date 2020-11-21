@@ -23,6 +23,9 @@ trait SyncInfoExtension
     /** @var Cache[] $userId */
     private $userId=[];
 
+    public function getUserInfo($user_name){
+        return isset($this->cache[$user_name])?$this->cache[$user_name]:null;
+    }
     public function getInfo($user_name)
     {
         while (true) {
@@ -66,7 +69,7 @@ trait SyncInfoExtension
     }
     public function syncInfoExtensionOnNoUserEvent(NoUserEvent $event)
     {
-        $this->aanswer = false;
+        $this->answer = false;
     }
     public function syncInfoExtensionOnUserInfoEvent(UserInfoEvent $event)
     {

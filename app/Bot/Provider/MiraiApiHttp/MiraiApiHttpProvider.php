@@ -3,11 +3,6 @@ namespace Bot\Provider\MiraiApiHttp;
 
 use Bot\Exception\NetworkException;
 use Bot\Extensions\AutoListener;
-use Bot\Extensions\SyncInfoExtension;
-use Bot\Packets\PersonChatPacket;
-use Bot\Provider\IIROSE\Extensions\CodeExtension;
-use Bot\Provider\IIROSE\Packets\ChatPacket;
-use Bot\Provider\IIROSE\Packets\PingPacket;
 use Bot\Provider\MiraiApiHttp\Api\AuthApi;
 use Bot\Provider\MiraiApiHttp\Api\ReleaseApi;
 use Bot\Provider\MiraiApiHttp\Api\SendFriendMessageApi;

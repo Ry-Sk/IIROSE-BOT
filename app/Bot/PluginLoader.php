@@ -11,11 +11,13 @@ class PluginLoader
     protected $bot;
     protected $configure;
     protected $slug;
+    protected $botPlugin;
     protected $load=false;
-    public function __construct($bot, $configure, $slug)
+    public function __construct($bot, $botPlugin, $slug)
     {
         $this->bot=$bot;
-        $this->configure=json_decode($configure, true);
+        $this->botPlugin=$botPlugin;
+        $this->configure=json_decode($botPlugin->configure, true);
         $this->slug=$slug;
     }
     public function load()

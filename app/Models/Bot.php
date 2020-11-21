@@ -191,8 +191,11 @@ class Bot extends Model
      */
     public function setRoom($room)
     {
+        $bot=Bot::findOrFail($this->id);
+        $bot->room = $room;
+        $bot->saveOrFail();
         $this->room = $room;
-        $this->saveOrFail();
+        $this->provider->reload();
     }
 
 

@@ -56,7 +56,6 @@ class JsPluginLoader extends PluginLoader
                 $this->plugin->setTimeLimit(5000);
                 $this->plugin->setMemoryLimit(1024 * 1024 * 512);// 512M
                 $this->plugin->setModuleLoader(function ($name) {
-                    var_dump($name);
                     return file_get_contents($this->basePath . 'Plugin/' . $name . '.js');
                 });
                 //$this->plugin->setModuleNormaliser();

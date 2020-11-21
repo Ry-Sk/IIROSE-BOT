@@ -9,7 +9,7 @@ use Logger\Logger;
 use Model\Models\Model;
 
 /**
- * Class Bot_plugin
+ * Class Botplugin
  * @package Models
  * @adminphp start
  * @property $id
@@ -54,7 +54,7 @@ class BotPlugin extends Model
         $this->isload=true;
         $this->bot=$bot;
         $this->plugin=Plugin::find($this->slug);
-        $this->plugin->load($bot, $this->configure);
+        $this->plugin->load($bot, $this);
     }
     public function check()
     {

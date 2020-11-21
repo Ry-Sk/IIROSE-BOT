@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Bot\Packets;
+namespace  Bot\Provider\IIROSE\Packets;
 
 use Bot\Provider\IIROSE\Packet;
 

@@ -23,16 +23,12 @@ class Connection
             $this->client = new Client('127.0.0.1', Bot::$instance->uid, false);
             $ret = $this->client->upgrade('/all?sessionKey='.urlencode(MiraiApiHttpProvider::$instance->session));
             go(function () use ($receive) {
-                try {
-                    while (true) {
-                        $data=@$this->client->recv()->data;
-                        if (!$data) {
-                            throw new NetworkException();
-                        }
-                        $receive($data);
+                while (true) {
+                    $data=@$this->client->recv()->data;
+                    if (!$data && $data === '') {
+                        throw new NetworkException();
                     }
-                } catch (Throwable $e) {
-                    var_dump($e);
+                    $receive($data);
                 }
             });
         } catch (NetworkException $e) {
@@ -72,7 +68,6 @@ class Connection
 
     public function close()
     {
-        echo 'c';
         try {
             if (isset($this->client) && $this->client) {
                 $this->client->close();

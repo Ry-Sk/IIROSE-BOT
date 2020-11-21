@@ -23,7 +23,7 @@ class PersonChatEvent extends \Bot\Event\PersonChatEvent
     ) {
         $this->message = $message;
         $this->color = $color;
-        $this->color = $id;
+        $this->id = $id;
         $this->user_id = $user_id;
         $this->user_name = $user_name;
         $this->user_icon = $user_icon;

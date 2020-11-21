@@ -2,8 +2,8 @@
 
 namespace Bot\Provider\IIROSE\Models;
 
-use Bot\Packets\PersonChatPacket;
 use Bot\Provider\IIROSE\IIROSEProvider;
+use Bot\Provider\IIROSE\Packets\PersonChatPacket;
 
 class Sender extends \Bot\Models\Sender
 {

@@ -11,7 +11,7 @@ class PersonChatResolver implements Resolver
 {
     public function isPacket($message, $firstChar, $count, $explode)
     {
-        if ($count == 10) {
+        if ($count == 11) {
             return true;
         }
     }
@@ -20,12 +20,12 @@ class PersonChatResolver implements Resolver
     {
         $a = IIROSEProvider::decode(explode('>', $message));
         return new PersonChatEvent(
-            $a[3],
             $a[4],
-            $a[9],
-            substr($a[0], 1),
+            $a[5],
+            $a[10],
             $a[1],
-            $a[2]
+            $a[2],
+            $a[3]
         );
     }
 }

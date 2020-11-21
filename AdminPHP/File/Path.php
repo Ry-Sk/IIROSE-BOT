@@ -25,7 +25,6 @@ class Path
             new Path();
         }
         $dir=self::formt_dir(self::$instance->temp_path);
-        var_dump(dirname($dir.$file));
         if (!is_dir(dirname($dir.$file))) {
             mkdir(dirname($dir.$file), 0777, true);
         }

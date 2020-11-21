@@ -43,22 +43,27 @@ class Connection
                         'fp' => '@' . md5($this->username)
                     ]
             );
-            throw_if(!@$this->client->push($handle), new NetworkException());
+            if(!@$this->client->push($handle)){
+                Logger::warn('连接建立失败');
+                $this->close();
+                return;
+            }
             @$this->client->push('=^v#');
             @$this->client->push(')#');
             @$this->client->push('>#');
-
+            Logger::info('连接建立完成');
             go(function () use ($receive) {
-                try {
-                    while (true) {
+                while (true) {
+                    if (isset($this->client) && $this->client) {
                         $data=@$this->client->recv()->data;
-                        if (!$data) {
-                            throw new NetworkException();
+                        if (!$data && $data !== '') {
+                            \Co::sleep(0.1);
+                            continue;
                         }
                         $receive($data);
+                    }else{
+                        \Co::sleep(0.1);
                     }
-                } catch (Throwable $e) {
-                    var_dump($e);
                 }
             });
         } catch (NetworkException $e) {
@@ -98,13 +103,9 @@ class Connection
 
     public function close()
     {
-        echo 'c';
-        try {
-            if (isset($this->client) && $this->client) {
-                $this->client->close();
-            }
-            unset($this->client);
-        } catch (Throwable $e) {
+        if (isset($this->client) && $this->client) {
+            $this->client->close();
         }
+        $this->client=null;
     }
 }

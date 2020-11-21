@@ -18,7 +18,8 @@
         "illuminate/validation": "^7.20",
         "dg/rss-php": "^1.4",
       "ext-v8js": "*",
-        "yurunsoft/yurun-http": "^4.2"
+        "yurunsoft/yurun-http": "^4.2",
+        "mhor/php-mediainfo": "^5.2"
     },
   "autoload": {
     "files": [
