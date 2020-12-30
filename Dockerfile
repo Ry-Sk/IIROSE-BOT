@@ -1,6 +1,9 @@
 FROM php:7.4-cli-buster
 ENV TZ Asia/Shanghai
 RUN apt-get update && apt-get install -y build-essential curl git python libglib2.0-dev patchelf libssl-dev libzip-dev libltdl-dev libnss3 mediainfo && \
+    docker-php-ext-install sockets && \
+    docker-php-ext-install bcmath && \
+    docker-php-ext-install zip && \
     cd /tmp && \
     git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git && \
     export PATH=`pwd`/depot_tools:"$PATH" && \
@@ -32,9 +35,6 @@ RUN apt-get update && apt-get install -y build-essential curl git python libglib
     make && make install && \
     docker-php-ext-enable v8js.so && \
     docker-php-ext-enable swoole.so && \
-    docker-php-ext-install sockets && \
-    docker-php-ext-install bcmath && \
-    docker-php-ext-install zip && \
     apt-get autoremove --purge -y  && \
     apt-get clean -y && \
     rm -rf /tmp/*
