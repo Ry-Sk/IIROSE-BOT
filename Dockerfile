@@ -1,4 +1,4 @@
-FROM php:cli-buster
+FROM php:7.4-cli-buster
 ENV TZ Asia/Shanghai
 RUN apt-get update && apt-get install -y build-essential curl git python libglib2.0-dev patchelf libssl-dev libzip-dev libltdl-dev libnss3 mediainfo && \
     cd /tmp && \
