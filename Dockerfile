@@ -35,7 +35,7 @@ RUN apt-get update && apt-get install -y build-essential curl git python libglib
     make && make install && \
     docker-php-ext-enable v8js.so && \
     docker-php-ext-enable swoole.so && \
-    apt purge build-essential git python  -y&& \
+    apt purge build-essential git python  -y && \
     apt-get autoremove --purge -y  && \
     apt-get clean -y && \
     rm -rf /tmp/* /usr/local/v8
