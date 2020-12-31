@@ -29,14 +29,15 @@ RUN apt-get update && apt-get install -y build-essential curl git python libglib
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
     git clone https://github.com/swoole/swoole-src.git && \
     cd swoole-src && \
-    git checkout v4.5.7 && \
+    git checkout v4.5.10 && \
     phpize && \
     ./configure --enable-openssl --enable-sockets --enable-http2 --enable-mysqlnd && \
     make && make install && \
     docker-php-ext-enable v8js.so && \
     docker-php-ext-enable swoole.so && \
+    apt purge build-essential git python  -y&& \
     apt-get autoremove --purge -y  && \
     apt-get clean -y && \
-    rm -rf /tmp/*
+    rm -rf /tmp/* /usr/local/v8
 ENTRYPOINT [ "/bin/bash" ]
 ENV PS1="\h:\w\$ "
