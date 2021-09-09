@@ -1,0 +1,36 @@
+{
+    "require": {
+        "symfony/console": "^5.1",
+        "vlucas/phpdotenv": "^5.0",
+      "ext-json": "*",
+      "ext-swoole": "*",
+        "swoole/ide-helper": "^4.5",
+        "symfony/routing": "^5.1",
+      "ext-fileinfo": "*",
+        "symfony/http-foundation": "^5.1",
+        "illuminate/view": "^7.18",
+        "illuminate/database": "^7.18",
+      "ext-posix": "*",
+      "ext-zlib": "*",
+        "guzzlehttp/guzzle": "^7.0",
+        "erusev/parsedown": "^1.7",
+      "ext-bcmath": "*",
+        "illuminate/validation": "^7.20",
+        "dg/rss-php": "^1.4",
+      "ext-v8js": "*",
+        "yurunsoft/yurun-http": "^4.2",
+        "mhor/php-mediainfo": "^5.2"
+    },
+  "autoload": {
+    "files": [
+      "AdminPHP/functions.php",
+      "app/functions.php"
+    ]
+  },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://mirrors.aliyun.com/composer/"
+        }
+    }
+}

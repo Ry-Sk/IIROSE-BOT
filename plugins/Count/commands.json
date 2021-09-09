@@ -1,0 +1,28 @@
+[
+  {
+    "sign": "count:user",
+    "aliases":["cu"],
+    "description": "看看你说了多少话",
+    "help": "/count:user",
+    "usages": [
+      "/count:user"
+    ],
+    "arguments": [
+    ],
+    "options": [
+    ]
+  },
+  {
+    "sign": "count:bot",
+    "aliases":["cb"],
+    "description": "看看机器人见过多少人",
+    "help": "/count:bot查看",
+    "usages": [
+      "/count:bot"
+    ],
+    "arguments": [
+    ],
+    "options": [
+    ]
+  }
+]

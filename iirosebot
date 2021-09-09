@@ -1,0 +1,6 @@
+#!/usr/bin/env php
+<?php
+define('ROOT',__DIR__);
+require_once ROOT.'/AdminPHP/init.php';
+use Console\Console;
+new Console();

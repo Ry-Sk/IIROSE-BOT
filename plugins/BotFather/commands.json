@@ -1,0 +1,125 @@
+[
+  {
+    "sign": "botFather:here",
+    "aliases": [
+      "bh"
+    ],
+    "description": "来这里啦",
+    "help": "/bh",
+    "usages": [
+      "/bh"
+    ],
+    "arguments": [],
+    "options": []
+  },
+  {
+    "sign": "botFather:enablePlugin",
+    "aliases": [
+      "bep"
+    ],
+    "description": "启用插件",
+    "help": "/bep",
+    "usages": [
+      "/bep RSS"
+    ],
+    "arguments": [
+      {
+        "name": "plugin",
+        "require": true,
+        "array": false,
+        "describle": "插件名",
+        "default": null
+      }
+    ],
+    "options": []
+  },
+  {
+    "sign": "botFather:disablePlugin",
+    "aliases": [
+      "bdp"
+    ],
+    "description": "禁用插件",
+    "help": "/bdp",
+    "usages": [
+      "/bdp RSS"
+    ],
+    "arguments": [
+      {
+        "name": "plugin",
+        "require": true,
+        "array": false,
+        "describle": "插件名",
+        "default": null
+      }
+    ],
+    "options": []
+  },{
+    "sign": "botFather:listPlugin",
+    "aliases": [
+      "blp"
+    ],
+    "description": "启用的插件",
+    "help": "/blp",
+    "usages": [
+      "/blp"
+    ],
+    "arguments": [
+    ],
+    "options": []
+  },
+  {
+    "sign": "botFather:login",
+    "aliases": [
+      "bl"
+    ],
+    "description": "登录机器人",
+    "help": "/bl",
+    "usages": [
+      "/bl log 123"
+    ],
+    "arguments": [
+      {
+        "name": "username",
+        "require": true,
+        "array": false,
+        "describle": "用户名",
+        "default": null
+      },
+      {
+        "name": "password",
+        "require": true,
+        "array": false,
+        "describle": "密码",
+        "default": null
+      }
+    ],
+    "options": []
+  } , {
+    "sign": "botFather:signout",
+    "aliases": [
+      "bs"
+    ],
+    "description": "登出机器人",
+    "help": "/bs",
+    "usages": [
+      "/bs log 123"
+    ],
+    "arguments": [
+      {
+        "name": "username",
+        "require": true,
+        "array": false,
+        "describle": "用户名",
+        "default": null
+      },
+      {
+        "name": "password",
+        "require": true,
+        "array": false,
+        "describle": "密码",
+        "default": null
+      }
+    ],
+    "options": []
+  }
+]

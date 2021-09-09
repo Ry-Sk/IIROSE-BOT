@@ -1,0 +1,1 @@
+<input type="text" name="<?php echo e($name); ?>" value="<?php echo e($default); ?>"><?php /**PATH /home/logos/projects/iirose-bot/views/inputs/text.blade.php ENDPATH**/ ?>

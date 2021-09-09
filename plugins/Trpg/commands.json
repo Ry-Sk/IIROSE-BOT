@@ -1,0 +1,24 @@
+[
+    {
+        "sign": "trpg:r",
+        "aliases":["r"],
+        "description": "好耶！是骰娘",
+        "help": "/r",
+        "usages": [
+            "/r 5d6 正常的随机数：5个6面骰",
+            "/r 5d2321321367983426157943759327147332464723215438979 非常不正常的随机数：5个2321...面骰",
+            "悄悄说一下，这是真随机数....没错，一晚上就写了一个随机数插件"
+        ],
+        "arguments": [
+            {
+                "name": "exp",
+                "require": false,
+                "array": false,
+                "describle": "表达式",
+                "default": false
+            }
+        ],
+        "options": [
+        ]
+    }
+]
