@@ -19,7 +19,7 @@ class LikeResolver implements Resolver
     }
     public function pharse($message)
     {
-        $a = IIROSEProvider::decode(explode('>', substr($message, 2)));
+        $a = IIROSEProvider::decode(explode('>', substr($message, 1)));
         return new LikeEvent(
             $a[6],
             $a[0],

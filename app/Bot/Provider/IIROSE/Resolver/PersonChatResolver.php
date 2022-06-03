@@ -11,7 +11,7 @@ class PersonChatResolver implements Resolver
 {
     public function isPacket($message, $firstChar, $count, $explode)
     {
-        if ($count == 11) {
+        if ($firstChar == '"' && $count == 11) {
             return true;
         }
     }

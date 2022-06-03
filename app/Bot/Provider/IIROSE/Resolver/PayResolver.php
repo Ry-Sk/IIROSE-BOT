@@ -23,7 +23,7 @@ class PayResolver implements Resolver
         $ma=explode(' ', $a[3]);
         return new PayEvent(
             $a[6],
-            substr($a[0], 2),
+            substr($a[0], 1),
             $a[1],
             $a[5],
             substr($ma[0], 2),

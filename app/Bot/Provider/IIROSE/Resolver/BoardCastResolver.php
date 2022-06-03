@@ -11,7 +11,7 @@ class BoardCastResolver implements Resolver
 {
     public function isPacket($message, $firstChar, $count, $explode)
     {
-        if ($firstChar == '=' && $count == 6) {
+        if ($firstChar == '=') {
             return true;
         }
     }

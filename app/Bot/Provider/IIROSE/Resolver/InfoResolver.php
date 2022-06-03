@@ -11,7 +11,7 @@ class InfoResolver implements Resolver
 {
     public function isPacket($message, $firstChar, $count, $explode)
     {
-        if ($count == 23) {
+        if ($firstChar == '+') {
             return true;
         }
     }

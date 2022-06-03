@@ -11,7 +11,7 @@ class UserInfoResolver implements Resolver
 {
     public function isPacket($message, $firstChar, $count, $explode)
     {
-        if ($count == 12 && $explode[5] == 'n') {
+        if ($firstChar=='%' && $count == 12 && $explode[5] == 'n') {
             return true;
         }
     }

@@ -28,10 +28,9 @@ class Resolve
         $firstChar = substr($message, 0, 1);
         $explode = self::decode(explode('>', $message));
         $count = count($explode);
-        $firstChar=substr($message,0,1);
         foreach ($this->resolvers as $resolver){
             if($resolver->isPacket($message, $firstChar, $count, $explode)){
-                return $resolver->pharse($message);
+                return $resolver->pharse(substr($message,1));
             }
         }
         return null;

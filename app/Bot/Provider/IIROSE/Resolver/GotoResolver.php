@@ -11,7 +11,7 @@ class GotoResolver implements Resolver
 {
     public function isPacket($message, $firstChar, $count, $explode)
     {
-        if ($count == 12
+        if ($firstChar == '"' && $count == 12
             && substr($explode[3], 0, 1) == '\''
             && $explode[3] != '\'1'
             && $explode[3] != '\'3') {
