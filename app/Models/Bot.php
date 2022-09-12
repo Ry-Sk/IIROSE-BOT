@@ -228,7 +228,7 @@ class Bot extends Model
 
     public function onChat(ChatEvent $chatEvent)
     {
-        if (substr($chatEvent->getMessage(), 0, 1) == '/' && $chatEvent->getMessage()->getMessage() !== '/') {
+        if (substr($chatEvent->getMessage(), 0, 1) == '/' && $chatEvent->getMessage() !== '/') {
             $output = new BufferedOutput();
             try {
                 $this->command->run(new InputUtils(substr($chatEvent->getMessage(), 1), $chatEvent), $output);
