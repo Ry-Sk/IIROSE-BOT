@@ -11,9 +11,9 @@ class JoinResolver implements Resolver
 {
     public function isPacket($message, $firstChar, $count, $explode)
     {
-        if ($firstChar == '"' && $count == 12
+        if (/* $firstChar == '"' &&  */$count == 12
             && $explode[3]=='\'1'
-            && substr($explode[0],1)>Bot::$instance->startAt
+            && $explode[0]>Bot::$instance->startAt
             && $explode[2]!=Bot::$instance->username) {
             return true;
         }

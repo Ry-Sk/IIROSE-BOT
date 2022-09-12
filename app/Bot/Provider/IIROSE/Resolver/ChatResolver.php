@@ -11,9 +11,10 @@ class ChatResolver implements Resolver
 {
     public function isPacket($message, $firstChar, $count, $explode)
     {
-         if ($firstChar == '"' && $count == 11
-            && !(substr($explode[0],1)<Bot::$instance->startAt)
-            && ($explode[2]!=Bot::$instance->username)) {
+         if (/*$firstChar == '"' && */$count == 11 
+            && $explode[0]>Bot::$instance->startAt 
+            && strlen($explode[1])!=13 
+            && $explode[2]!=Bot::$instance->username) {
             return true;
         } 
     }

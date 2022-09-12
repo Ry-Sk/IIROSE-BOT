@@ -10,7 +10,8 @@ class LeaveResolver implements Resolver
 {
     public function isPacket($message, $firstChar, $count, $explode)
     {
-        if ($firstChar == '"' && $count == 12 && $explode[3]=='\'3') {
+        if (/* $firstChar == '"' && */ $count == 12 
+            && $explode[3]=='\'3') {
             return true;
         }
     }

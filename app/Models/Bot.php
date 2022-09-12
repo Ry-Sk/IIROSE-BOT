@@ -169,7 +169,7 @@ class Bot extends Model
 
     private function loadCommand()
     {
-        $this->command = new Application('IIROSE-BOT-' . $this->username, '喵呜~');
+        $this->command = new Application('Sir, ' . $this->username, ' At your service~');
     }
     public function addCommand($configure)
     {
@@ -228,7 +228,7 @@ class Bot extends Model
 
     public function onChat(ChatEvent $chatEvent)
     {
-        if (substr($chatEvent->getMessage(), 0, 1) == '/') {
+        if (substr($chatEvent->getMessage(), 0, 1) == '/' && $chatEvent->getMessage()->getMessage() !== '/') {
             $output = new BufferedOutput();
             try {
                 $this->command->run(new InputUtils(substr($chatEvent->getMessage(), 1), $chatEvent), $output);
@@ -245,7 +245,7 @@ class Bot extends Model
 
     public function onPersonChat(PersonChatEvent $personChatEvent)
     {
-        if (substr($personChatEvent->getMessage(), 0, 1) == '/') {
+        if (substr($personChatEvent->getMessage(), 0, 1) == '/' && $personChatEvent->getMessage() !== '/') {
             $output = new BufferedOutput();
             try {
                 Bot::$instance->command->run(new InputUtils(substr($personChatEvent->getMessage(), 1), $personChatEvent), $output);

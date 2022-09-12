@@ -29,7 +29,7 @@ class Sender extends \Bot\Models\Sender
 
     public function sendMessage($message,$color=null)
     {
-        $this->sendRawMessage('\\\\\\~'.$message,$color);
+        $this->sendRawMessage('\\\\\('.$message,$color);
     }
 
     public function sendRawMessage($message,$color=null)

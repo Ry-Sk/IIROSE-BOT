@@ -27,7 +27,7 @@ class Connection
     public function login($room, $receive)
     {
         try {
-            $this->client = new Client('m.iirose.com', 443, true);
+            $this->client = new Client('m2.iirose.com', 8778, true);
             $ret = $this->client->upgrade('/');
             $handle = '*' . json_encode(
                 [
@@ -39,6 +39,7 @@ class Connection
                         'cp' => microtime() . '1090',
                         'mu' => '01',
                         'nt' => '!6',
+                        'rp' => '1234567890',
                         'mb' => '',
                         'fp' => '@' . md5($this->username)
                     ]

@@ -128,9 +128,27 @@ class IIROSEProvider extends Provider
     private function solve($message)
     {
         $s = @gzdecode(substr($message, 1)) ?: $message;
-        $dump = explode('<', $s);
-        foreach ($dump as $p) {
-            $this->parse($p);
+        switch(substr($s,0,1)){
+            case '"':
+                $msgArr=explode('"',substr($s,1));
+                if($msgArr[0]){
+                    $dump = explode('<', $msgArr[0]);
+                    foreach ($dump as $p) {
+                        $this->parse($p);
+                    } 
+                }
+                if(isset($msgArr[1])){
+                    $dump = explode('<', $msgArr[1]);
+                    foreach ($dump as $p) {
+                        $this->parse($p);
+                    } 
+                }
+                break;
+            default:
+                $dump = explode('<', $s);
+                foreach ($dump as $p) {
+                    $this->parse($p);
+                } 
         }
     }
 
